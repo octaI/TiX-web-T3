@@ -3,6 +3,12 @@
   "version": "1.0.0",
   "description": "Web application for tix time server",
   "main": "index.js",
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "node": true
+    }
+  },
   "engines": {
     "node": ">=4.5.0",
     "npm": "^3.0.0"
