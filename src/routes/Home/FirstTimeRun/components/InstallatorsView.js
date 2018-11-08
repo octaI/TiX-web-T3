@@ -13,7 +13,7 @@ class InstallatorsView extends Component {
           <div className='row'>
             <ul className='thumbnails'>
               <li className='col-md-4'>
-                <p >Linux</p>
+                <p>Linux</p>
                 <a href='/downloads/assets/tix-time-client-0.1.0-SNAPSHOT.deb' className='thumbnail'>
                   <img
                     width='150'
@@ -27,7 +27,7 @@ class InstallatorsView extends Component {
                 <a href='/downloads/assets/tix-time-client-0.1.0-SNAPSHOT.exe' className='thumbnail'>
                   <img
                     width='150'
-                    alt='Linux'
+                    alt='Windows'
                     src={WindowsLogo}
                   />
                 </a>

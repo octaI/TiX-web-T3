@@ -1,3 +1,5 @@
 #node_dependencies
 node_modules/
 .idea/
+dist/
+package-lock.json
