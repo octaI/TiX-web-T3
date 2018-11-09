@@ -18,7 +18,7 @@ Ojalá funcione. -d para que se detachee.
 Una vez levantado y corriendo podés probar haciendo requests,
 y después vamos a modificar el admin para que tenga la pass que querramos
 
-$ docker run -it --link test-mysql:mysql --net tix-api-deploy_default --rm mysql sh -c 'exec mysql -u"root" -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD" -P"3306" -h"test-mysql"
+$ docker run -it --link test-mysql:mysql --net tix-api-deploy_default --rm mysql sh -c 'exec mysql -u"root" -p"$MYSQL_ENV_MYSQL_ROOT_PASSWORD" -P"3306" -h"test-mysql"'
 Enter password: root
 mysql> use tix;
 mysql> UPDATE user SET password="3ijxvtFepHZ6QkpwPS0eT5A2rbfkB8zeKRqL/UoxVrCHln2MGvnRnKfP1AkIY0N/eTV9/9MXr3kjz09RZWY4Kw==" WHERE username="admin";

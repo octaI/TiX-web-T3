@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 class InstallationsView extends Component {
-
   render() {
     return (
       <div>

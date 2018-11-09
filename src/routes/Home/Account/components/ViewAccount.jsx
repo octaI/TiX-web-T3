@@ -26,7 +26,7 @@ class AdminView extends Component {
       <div className='hero-unit'>
         <div className='row-fluid'>
           <span className='span12' >
-            <h3>Usuario</h3>
+            <h3>Modificar usuario</h3>
           </span>
           <span className='row'>
             <div className='col-md-6'>
