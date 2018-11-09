@@ -34,7 +34,7 @@ class ViewInstallation extends Component {
         <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
           <TableRow>
             <TableHeaderColumn>Nombre</TableHeaderColumn>
-            <TableHeaderColumn>Clave Publica</TableHeaderColumn>
+            <TableHeaderColumn>Clave Pública</TableHeaderColumn>
             <TableHeaderColumn>Acciones</TableHeaderColumn>
           </TableRow>
         </TableHeader>

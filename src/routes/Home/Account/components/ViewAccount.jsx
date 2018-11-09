@@ -30,7 +30,7 @@ class AdminView extends Component {
           </span>
           <span className='row'>
             <div className='col-md-6'>
-              <UsernameForm onSubmit={this.onUserSubmit} />
+              <UsernameForm onSubmit={this.onUserSubmit} user={this.props.user} />
             </div>
             <div className='col-md-6'>
               <PasswordForm onSubmit={this.onPasswordSubmit} />
@@ -45,6 +45,7 @@ class AdminView extends Component {
 AdminView.propTypes = {
   user: PropTypes.shape({
     id: PropTypes.number,
+    username: PropTypes.string,
   }),
   updateUsername: PropTypes.func,
   updatePassword: PropTypes.func,

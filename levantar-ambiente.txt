@@ -37,5 +37,5 @@ $ npm install
 $ npm install nodemon
 $ npm run dev
 
-La webapp se levanta en el puerto 3050, con versiones estáticas de las imágenes.
+La webapp se levanta en el puerto 3050, con versiones estáticas de los recursos.
 Al editar algo se debería refreshear en el browser.
