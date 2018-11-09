@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import MenuItem from 'material-ui/MenuItem';
 import {
@@ -29,7 +30,7 @@ class FiltersForm extends Component {
             <div className='row'>
               <div className='col-md-4'>
                 <Field name='startDate' component={DatePicker} floatingLabelText='Fecha Inicio' validate={[required]} />
-                <Field component={DatePicker} floatingLabelText={'Fecha Fin'} name='endDate' validate={[required]} />
+                <Field name='endDate'   component={DatePicker} floatingLabelText='Fecha Fin'    validate={[required]} />
               </div>
               <div className='col-md-4'>
                 <Field name='dayOfWeek' component={SelectField} floatingLabelText='Dia de la semana' >
@@ -44,12 +45,12 @@ class FiltersForm extends Component {
                 </Field>
                 <Field name='isp' component={SelectField} floatingLabelText='ISP' validate={[required]}>
                   {Object.keys(providers).map(key =>
-                    <MenuItem key={key} value={providers[key].id} primaryText={providers[key].name} />)}
+                    <MenuItem key={key} value={providers[key].id} primaryText={providers[key].name} /> )}
                 </Field>
               </div>
               <div className='col-md-4'>
                 <Field name='startTime' component={TextField} floatingLabelText='Hora Inicio' />
-                <Field component={TextField} floatingLabelText={'Hora Final'} name='endTime' />
+                <Field name='endTime'   component={TextField} floatingLabelText='Hora Final' />
               </div>
             </div>
             <RaisedButton className='settings-button-margin' label='Filtrar' type='submit' />
@@ -70,6 +71,11 @@ FiltersForm.propTypes = {
 
 const FiltersFormView = reduxForm({
   form: 'usernameForm',
+  initialValues: {
+    startDate: new Date(moment().subtract(1, 'day').subtract(1, 'month')),
+    endDate:   new Date(moment().subtract(1, 'day')),
+    isp:       1
+  },
 })(FiltersForm);
 
 export default FiltersFormView;
