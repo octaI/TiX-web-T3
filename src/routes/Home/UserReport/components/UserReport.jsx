@@ -47,6 +47,7 @@ class UserReportView extends Component {
       <DashboardChart key={provider} isp={provider} email={user.username} fechas={data.fechas} data={data.data} />
     );
   }
+
   render() {
     const {
       reports,

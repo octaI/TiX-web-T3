@@ -28,7 +28,10 @@ SelectDate.propTypes = {
 
 const SelectDateView = reduxForm({
   form: 'selectDate',
-  initialValues: { startDate: new Date(moment().subtract(1, 'days')), endDate: new Date(moment()) },
+  initialValues: {
+    startDate: new Date(moment().subtract(1, 'day').subtract(1, 'month')),
+    endDate:   new Date(moment().subtract(1, 'day'))
+  },
 })(SelectDate);
 
 export default SelectDateView;
