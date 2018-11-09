@@ -15,12 +15,14 @@ const renderFolders = (providers, id, setActiveInstallation) => {
       onTouchTap={() => setActiveInstallation(id, 0)}
       value={`/home/report/${id}/0`}
     />);
-  return providerItems.concat(providers.map(provider => (<ListItem
-    key={`ListItem${id}-${provider.id}`}
-    primaryText={provider.name}
-    onTouchTap={() => setActiveInstallation(id, provider.id)}
-    value={`/home/report/${id}/${provider.id}`}
-  />)));
+  return providerItems.concat(providers.map(provider => (
+    <ListItem
+      key={`ListItem${id}-${provider.id}`}
+      primaryText={provider.name}
+      onTouchTap={() => setActiveInstallation(id, provider.id)}
+      value={`/home/report/${id}/${provider.id}`}
+    />
+  )));
 };
 
 export const LocationList = props => (
@@ -31,8 +33,8 @@ export const LocationList = props => (
     onTouchTap={() => props.setActiveInstallation(props.installation.id, 0)}
     value={`/home/report/${props.installation.id}`}
     nestedItems={
-        renderFolders(props.installation.providers, props.installation.id, props.setActiveInstallation)
-      }
+      renderFolders(props.installation.providers, props.installation.id, props.setActiveInstallation)
+    }
   />
 );
 
