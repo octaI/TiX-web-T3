@@ -46,7 +46,8 @@ export const Header = props => (
       style={{ backgroundColor: '#c64e31' }}
       onTitleTouchTap={props.redirectToHome}
     />
-    <div className='beta-banner'>{ 'Versión Beta' }</div>
+      <div className='beta-banner'>{ 'Versión Beta' }</div>
+
     <Alert alerts={props.alerts} clearAlert={props.clearAlert} />
   </header>
 );

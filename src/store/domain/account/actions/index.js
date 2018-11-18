@@ -32,7 +32,7 @@ export function loginUser(login) {
 }
 
 export function registerUser(register) {
-  return dispatch => dispatch({
+    return dispatch => dispatch({
     type: REGISTER_USER,
     payload: fetch('/register', { method: 'POST', body: register }),
   }).then(() => {
@@ -46,6 +46,7 @@ export function logoutUser() {
     dispatch({
       type: LOGOUT_USER,
     });
+
     return dispatch({ type: UNAUTHORIZED });
   };
 }

@@ -50,13 +50,43 @@ class RegisterForm extends Component {
   }
 }
 
+const validate = values => {
+    const errors = {};
+    if (!values.username)  {
+        errors.username = 'Requerido'
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.username)) {
+        errors.username = 'Direccion de email Invalida';
+    }
+    if (!values.password1) {
+      errors.password1 = 'Requerido'
+    } else  if (values.password1 !== values.password2){
+        errors.password2 = 'Los passwords no coinciden'
+    }
+    if (!values.password2) {
+      errors.password2 = 'Requerido'
+    }
+
+
+  return errors;
+};
+
+const renderField = ({ input, label, type, meta: { touched, error } }) => (
+    <div>
+        <label>{label}</label>
+        <div>
+            <input {...input} placeholder={label} type={type}/>
+            {touched && error && <span>{error}</span>}
+        </div>
+    </div>
+)
 
 RegisterForm.propTypes = {
   handleSubmit: PropTypes.func,
 };
 
 const ReduxRegisterForm = reduxForm({
-  form: 'register',
+    form: 'register',
+    validate
 })(RegisterForm);
 
 export default ReduxRegisterForm;
