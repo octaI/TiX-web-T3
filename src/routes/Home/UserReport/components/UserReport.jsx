@@ -20,11 +20,11 @@ class UserReportView extends Component {
     data.data = [
       {
         data: report.upUsage,
-        name: 'Utilizacion Up',
+        name: 'Utilización Up',
       },
       {
         data: report.downUsage,
-        name: 'Utilizacion Down',
+        name: 'Utilización Down',
       },
       {
         data: report.upQuality,

@@ -57,11 +57,11 @@ class DashboardView extends Component {
     this.data = [
       {
         data: reports.upUsage,
-        name: 'Utilizacion Up',
+        name: 'Utilización Up',
       },
       {
         data: reports.downUsage,
-        name: 'Utilizacion Down',
+        name: 'Utilización Down',
       },
       {
         data: reports.upQuality,
@@ -78,7 +78,7 @@ class DashboardView extends Component {
     this.data = [
       {
         data: reports.upUsage,
-        name: 'Utilizacion Up',
+        name: 'Utilización Up',
       },
       {
         data: reports.upQuality,
@@ -91,7 +91,7 @@ class DashboardView extends Component {
     this.data = [
       {
         data: reports.downUsage,
-        name: 'Utilizacion Down',
+        name: 'Utilización Down',
       },
       {
         data: reports.downQuality,
@@ -210,4 +210,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(DashboardView);
-

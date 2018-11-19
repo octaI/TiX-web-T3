@@ -33,14 +33,14 @@ class FiltersForm extends Component {
                 <Field name='endDate'   component={DatePicker} floatingLabelText='Fecha Fin'    validate={[required]} />
               </div>
               <div className='col-md-4'>
-                <Field name='dayOfWeek' component={SelectField} floatingLabelText='Dia de la semana' >
+                <Field name='dayOfWeek' component={SelectField} floatingLabelText='Día de la semana' >
                   <MenuItem value='0' primaryText='Todos' />
                   <MenuItem value='1' primaryText='Lunes' />
                   <MenuItem value='2' primaryText='Martes' />
-                  <MenuItem value='3' primaryText='Miercoles' />
+                  <MenuItem value='3' primaryText='Miércoles' />
                   <MenuItem value='4' primaryText='Jueves' />
                   <MenuItem value='5' primaryText='Viernes' />
-                  <MenuItem value='6' primaryText='Sabado' />
+                  <MenuItem value='6' primaryText='Sábado' />
                   <MenuItem value='7' primaryText='Domingo' />
                 </Field>
                 <Field name='isp' component={SelectField} floatingLabelText='ISP' validate={[required]}>

@@ -67,7 +67,7 @@ class SidebarView extends Component {
           <Divider />
         </SelectableList>
 
-        <Subheader>Configuracion</Subheader>
+        <Subheader>Configuración</Subheader>
         <ListItem
           primaryText={'Ver Instalaciones'}
           leftIcon={<Pencil />}

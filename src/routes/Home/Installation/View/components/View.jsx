@@ -27,7 +27,7 @@ class ViewInstallation extends Component {
     } = this.props;
 
     if (!installations || !installations.list || installations.list.length === 0) {
-      return <span className='label label-important'>No hay instalaciones registradas en el sistema.</span>;
+      return <span className='label label-important'>No hay instalaciones registradas a la cuenta.</span>;
     }
     return (
       <Table>
@@ -58,7 +58,7 @@ class ViewInstallation extends Component {
       <div>
         <Card className='card-margins'>
           <CardTitle
-            title='Mis Instalaciones'
+            title='Mis instalaciones'
           />
           <CardText>
             {this.renderTable()}
@@ -66,7 +66,7 @@ class ViewInstallation extends Component {
         </Card>
         <Card className='card-margins'>
           <CardTitle
-            title='Descargar Instalador'
+            title='Descargar instalador'
           />
           <CardText>
             <InstallatorsView />

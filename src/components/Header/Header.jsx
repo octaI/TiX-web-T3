@@ -19,7 +19,7 @@ const renderLeftIcon = (user, logout, stopImpersonalization) => {
   if (!user) {
     return <FlatButton href='/about' label='Sobre el proyecto' />;
   }
-  const menuItems = [<MenuItem onTouchTap={logout} primaryText='Cerrar sesion' />];
+  const menuItems = [<MenuItem onTouchTap={logout} primaryText='Cerrar sesión' />];
   if (user.isImpersonating) {
     menuItems.push(
       <MenuItem onTouchTap={stopImpersonalization} primaryText='Terminar Impersonalización'/>

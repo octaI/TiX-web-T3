@@ -40,8 +40,8 @@ class MonthlyReportTable extends Component {
             <TableHeaderColumn>ISP</TableHeaderColumn>
             <TableHeaderColumn>Calidad Subida</TableHeaderColumn>
             <TableHeaderColumn>Calidad Bajada</TableHeaderColumn>
-            <TableHeaderColumn>Utilizacion Subida</TableHeaderColumn>
-            <TableHeaderColumn>Utilizacion Bajada</TableHeaderColumn>
+            <TableHeaderColumn>Utilización Subida</TableHeaderColumn>
+            <TableHeaderColumn>Utilización Bajada</TableHeaderColumn>
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={false} showRowHover>

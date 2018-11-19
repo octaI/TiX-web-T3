@@ -50,7 +50,7 @@ class DashboardChart extends Component {
       },
       yAxis: {
         title: {
-          text: '% de utilizacion',
+          text: '% de utilización',
         },
         plotLines: [{
           value: 0,
@@ -105,8 +105,8 @@ class DashboardChart extends Component {
     return (
       <Card className='card-margins'>
         <CardTitle
-          title={`Porcentaje de utilizacion de ancho de banda en ${isp}`}
-          subtitle={`Grafico general para ${email}`}
+          title={`Porcentaje de utilización de ancho de banda en ${isp}`}
+          subtitle={`Gráfico general para ${email}; puede tocar cualquier métrica para desactivarla`}
         />
         <CardText>
           {this.renderGraph()}

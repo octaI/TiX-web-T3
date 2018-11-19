@@ -77,16 +77,16 @@ class AdminView extends Component {
             <div className='col-md-6'>
               <HistogramChart
                 data={this.upUsageQuartils}
-                description='Utilization Subida'
-                title='Histograma Utilization Subida'
+                description='Utilización Subida'
+                title='Histograma Utilización Subida'
               />
             </div>
             <div className='col-md-6'>
               <HistogramChart
                 data={this.downUsageQuartils}
-                description='Utilization Bajada'
+                description='Utilización Bajada'
                 red
-                title='Histograma Utilization Bajada'
+                title='Histograma Utilización Bajada'
               />
             </div>
           </div>

@@ -54,7 +54,7 @@ class AdminView extends Component {
       <Card className='card-margins'>
         <CardTitle
           title='Administración de usuarios'
-          subtitle='Visualizar e Impersonalizar los usuarios del sistema'
+          subtitle='Visualizar e impersonalizar los usuarios del sistema'
         />
         <CardText>
           <Table>
