@@ -134,7 +134,7 @@ class AdminView extends Component {
       <Card className='card-margins'>
         <CardTitle
           title='Descarga de CSV'
-          subtitle='Descargar los datos RAW para analisis'
+          subtitle='Descargar los datos RAW para análisis'
         />
         <CardText>
           <CSVLink data={this.props.reports} separator={','} filename={`reporte-${providers[provider].name}.csv`}>

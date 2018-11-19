@@ -6,6 +6,7 @@ Things to fix
 * RecoverView redefine clase HomeView (cambiarle al nombre correcto)
 * Tiene sentido que "Reporte de usuario" esté en la sección "Configuración"?
 * Poder modificar la escala de los gráficos; que las fechas aclaren el año
+* Al cambiar entre isp's, queda el gráfico (o falta de él) del anterior
 
 Solved?
 -------

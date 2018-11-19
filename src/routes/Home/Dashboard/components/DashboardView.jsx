@@ -142,13 +142,7 @@ class DashboardView extends Component {
     return (
       <div>
         <SelectDate onSubmit={this.selectDates} />
-        <DashboardChart
-          isp={this.getProviderName(this.props.routeParams.providerId)}
-          email={this.props.user.username}
-          fechas={this.fechas}
-          data={this.data}
-        />
-        <Paper zDepth={1}>
+        <Paper style={{ marginTop: '15px' }}>
           <BottomNavigation selectedIndex={this.state.selectedIndex}>
             <BottomNavigationItem
               label='General'
@@ -167,6 +161,12 @@ class DashboardView extends Component {
             />
           </BottomNavigation>
         </Paper>
+        <DashboardChart
+          isp={this.getProviderName(this.props.routeParams.providerId)}
+          email={this.props.user.username}
+          fechas={this.fechas}
+          data={this.data}
+        />
       </div>
     );
   }
