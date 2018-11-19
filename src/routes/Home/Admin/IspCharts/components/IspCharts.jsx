@@ -20,16 +20,17 @@ class AdminView extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.reports && this.state.version !== nextProps.reports.version) {
-      this.calculateQuartils(nextProps.reports);
+      this.calculateBins(nextProps.reports);
     }
   }
 
-  calculateQuartils(measures) {
+  calculateBins(measures) {
     const filters = this.state.filters;
-    this.upUsageQuartils = new Array(10).fill(0);
-    this.downUsageQuartils = new Array(10).fill(0);
-    this.upQualityQuartils = new Array(10).fill(0);
-    this.downQualityQuartils = new Array(10).fill(0);
+    this.upUsageBins = new Array(10).fill(0);
+    this.downUsageBins = new Array(10).fill(0);
+    this.upQualityBins = new Array(10).fill(0);
+    this.downQualityBins = new Array(10).fill(0);
+    this.theresData = false;
     measures.forEach((measure) => {
       const date = moment(measure.timestamp);
       if ((filters.dayOfWeek && (date.day() === filters.dayOfWeek - 1 || filters.dayOfWeek === 0)) ||
@@ -37,19 +38,20 @@ class AdminView extends Component {
         (!filters.endTime && filters.startTime && date.hour() >= filters.startTime) ||
         (!filters.startTime && filters.endTime && date.hour() <= filters.endTime) ||
         (!filters.dayOfWeek && !filters.startTime && !filters.endTime)) {
-        this.assignQuartils(this.upUsageQuartils, measure.upUsage);
-        this.assignQuartils(this.downUsageQuartils, measure.downUsage);
-        this.assignQuartils(this.upQualityQuartils, measure.upQuality);
-        this.assignQuartils(this.downQualityQuartils, measure.downQuality);
+        this.assignBins(this.upUsageBins, measure.upUsage);
+        this.assignBins(this.downUsageBins, measure.downUsage);
+        this.assignBins(this.upQualityBins, measure.upQuality);
+        this.assignBins(this.downQualityBins, measure.downQuality);
+        this.theresData = true;
       }
     });
   }
 
-  assignQuartils(quartilsArray, value) {
+  assignBins(binsArray, value) {
     let w = 0;
     for (let i = 0.101; i < 1.1; i += 0.1) {
       if (value <= i) {
-        quartilsArray[w] += 1;
+        binsArray[w] += 1;
         return;
       }
       w++;
@@ -63,8 +65,16 @@ class AdminView extends Component {
   }
 
   renderHistograms() {
-    if (!this.upUsageQuartils) {
+    if (!this.upUsageBins) {
       return <div />;
+    } else if (!this.theresData) {
+      return (
+        <Card className='card-margins'>
+          <CardText>
+            <span>No hay datos para estos filtros</span>
+          </CardText>
+        </Card>
+      );
     }
     return (
       <Card className='card-margins'>
@@ -76,14 +86,14 @@ class AdminView extends Component {
           <div className='row'>
             <div className='col-md-6'>
               <HistogramChart
-                data={this.upUsageQuartils}
+                data={this.upUsageBins}
                 description='Utilización Subida'
                 title='Histograma Utilización Subida'
               />
             </div>
             <div className='col-md-6'>
               <HistogramChart
-                data={this.downUsageQuartils}
+                data={this.downUsageBins}
                 description='Utilización Bajada'
                 red
                 title='Histograma Utilización Bajada'
@@ -93,14 +103,14 @@ class AdminView extends Component {
           <div className='row'>
             <div className='col-md-6'>
               <HistogramChart
-                data={this.upQualityQuartils}
+                data={this.upQualityBins}
                 description='Calidad Subida'
                 title='Histograma Calidad Subida'
               />
             </div>
             <div className='col-md-6'>
               <HistogramChart
-                data={this.downQualityQuartils}
+                data={this.downQualityBins}
                 description='Calidad Bajada'
                 red
                 title='Histograma Calidad Bajada'
@@ -117,7 +127,7 @@ class AdminView extends Component {
       providers,
       provider,
     } = this.props;
-    if (!this.upUsageQuartils) {
+    if (!this.upUsageBins || !this.theresData) {
       return <div />;
     }
     return (
