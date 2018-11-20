@@ -9,7 +9,7 @@ import { BottomNavigation, BottomNavigationItem } from 'material-ui/BottomNaviga
 import Paper from 'material-ui/Paper';
 import { connect } from 'react-redux';
 import DashboardChart from '../../../../components/Charts/DashboardChart';
-import { fetchReports } from '../../../../store/domain/report/actions';
+import { fetchReports, fetchLastReportDate } from '../../../../store/domain/report/actions';
 import { fetchProviders } from '../../../../store/domain/provider/actions';
 import SelectDate from './TimeForm';
 
@@ -34,6 +34,7 @@ class DashboardView extends Component {
     this.selectDownstream = this.selectDownstream.bind(this);
     this.selectUpstream = this.selectUpstream.bind(this);
     this.selectGeneral = this.selectGeneral.bind(this);
+    this.showLastMonthOfData = this.showLastMonthOfData.bind(this);
     this.selectDates = this.selectDates.bind(this);
     this.changeDate = this.changeDate.bind(this);
   }
@@ -51,11 +52,21 @@ class DashboardView extends Component {
       }
       nextProps.fetchReports(nextProps.user.id, nextProps.routeParams.installationId,
         nextProps.routeParams.providerId, startDate, endDate);
+      this.fetchLastDataPoint(nextProps);
       this.setState({ selectedIndex: 0 });
     }
     if (nextProps.reports) {
       this.setData(nextProps.reports);
     }
+  }
+
+  fetchLastDataPoint(props) {
+    const {
+      user,
+      routeParams,
+    } = props;
+    props.fetchLastReportDate(user.id, routeParams.installationId,
+      routeParams.providerId, moment().format('YYYY-MM-DD'));
   }
 
   setData(reports) {
@@ -124,6 +135,27 @@ class DashboardView extends Component {
     this.forceUpdate();
   }
 
+  showLastMonthOfData() {
+    const lastDate = this.props.reports.lastDate;
+    const {
+      user,
+      routeParams,
+    } = this.props;
+    if (lastDate) {
+      const lastReportDate = moment(lastDate, "YYYY-MM-DDTHH:mm:ss.SSSSZ");
+      const end = lastReportDate.format('YYYY-MM-DD');
+      const start = lastReportDate.subtract(1, 'month').format('YYYY-MM-DD');
+      this.setState({
+        startDate: start,
+        endDate: end,
+      });
+      this.props.fetchReports(user.id, routeParams.installationId,
+        routeParams.providerId, start, end);
+    } else {
+      this.fetchLastDataPoint(this.props);
+    }
+  }
+
   selectDates(dates) {
     const {
       user,
@@ -151,7 +183,7 @@ class DashboardView extends Component {
   render() {
     return (
       <div>
-        <SelectDate onSubmit={this.selectDates} onChange={this.changeDate} />
+        <SelectDate onSubmit={this.showLastMonthOfData} onChange={this.changeDate} />
         <Paper style={{ marginTop: '15px' }}>
           <BottomNavigation selectedIndex={this.state.selectedIndex}>
             <BottomNavigationItem
@@ -193,6 +225,7 @@ DashboardView.propTypes = {
   }),
   fetchReports: PropTypes.func,
   fetchProviders: PropTypes.func,
+  fetchLastReportDate: PropTypes.func,
   providers: PropTypes.shape({
     name: PropTypes.string,
   }),
@@ -201,6 +234,7 @@ DashboardView.propTypes = {
     downUsage: PropTypes.array,
     upQuality: PropTypes.array,
     downQuality: PropTypes.array,
+    lastDate: PropTypes.string,
   }),
 };
 
@@ -213,7 +247,10 @@ const mapStateToProps = (store) => ({
 const mapDispatchToProps = dispatch => ({
   fetchReports: (userId, installationId, providerId, startDate, endDate) =>
     dispatch(fetchReports(userId, installationId, providerId, startDate, endDate)),
-  fetchProviders: userId => dispatch(fetchProviders(userId)),
+  fetchProviders: userId =>
+    dispatch(fetchProviders(userId)),
+  fetchLastReportDate: (userId, installationId, providerId, endDate) =>
+    dispatch(fetchLastReportDate(userId, installationId, providerId, endDate)),
 });
 
 export default connect(

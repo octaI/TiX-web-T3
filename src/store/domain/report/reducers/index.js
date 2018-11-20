@@ -1,6 +1,11 @@
 import typeToReducer from 'type-to-reducer';
 import moment from 'moment';
-import { FETCH_REPORTS, FETCH_ALL_REPORTS, FETCH_ADMIN_REPORTS } from '../actions';
+import {
+  FETCH_REPORTS,
+  FETCH_LAST_REPORT_DATE,
+  FETCH_ALL_REPORTS,
+  FETCH_ADMIN_REPORTS
+} from '../actions';
 import { LOGOUT_USER } from '../../account/actions';
 
 let version = 0;
@@ -21,7 +26,7 @@ export default typeToReducer({
             downUsage.push(null);
             upQuality.push(null);
             downQuality.push(null);
-            dates.push(lastDate.add(25, 'minutes'));
+            dates.push(lastDate.add(25, 'minutes')); //Número mágico???
             lastDate = moment(measure.timestamp);
           }
         } else {
@@ -34,11 +39,27 @@ export default typeToReducer({
         dates.push(measure.timestamp);
       });
       return {
+        ...state,
         dates,
         upUsage,
         downUsage,
         upQuality,
         downQuality,
+      };
+    },
+  },
+  [FETCH_LAST_REPORT_DATE]: {
+    FULFILLED: (state, action) => {
+      let lastDate = null;
+      action.payload.forEach((measure) => {
+        if (!lastDate
+            || moment(measure.timestamp).isAfter(moment(lastDate).add(25, 'minutes'))) {
+          lastDate = measure.timestamp;
+        }
+      });
+      return {
+        ...state,
+        lastDate,
       };
     },
   },

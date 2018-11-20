@@ -9,6 +9,8 @@ Things to fix
 * Al cambiar entre isp's, queda el gráfico (o falta de él) del anterior
 * Mensajes de error si los filtros son inválidos (e.g., fecha inicio > fecha final)
 * Filtros de reportes: Opción "Todos" (días de la semana) no parece funcionar como debería
+* Abstraer host:port address
+* Los gráficos muestran el rango que tiene datos, en vez de todo el rango elegido
 
 Solved?
 -------
