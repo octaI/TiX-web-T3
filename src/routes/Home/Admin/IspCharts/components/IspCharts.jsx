@@ -151,7 +151,7 @@ class AdminView extends Component {
     } = this.props;
     return (
       <div>
-        <FiltersForm providers={providers} onSubmit={this.filterReports} />
+        <FiltersForm providers={providers} onSubmit={this.filterReports} onChange={this.filterReports} />
         {this.renderCsvDownload()}
         {this.renderHistograms()}
       </div>

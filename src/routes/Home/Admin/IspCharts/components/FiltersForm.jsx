@@ -16,7 +16,7 @@ const required = value => value ? undefined : 'Requerido';
 class FiltersForm extends Component {
 
   render() {
-    const { handleSubmit, providers } = this.props;
+    const { providers, handleSubmit, handleChange } = this.props;
     if (Object.keys(providers).length === 0) {
       return <span>wait</span>;
     }
@@ -26,7 +26,7 @@ class FiltersForm extends Component {
           title='Filtros de reporte'
         />
         <CardText>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} onChange={handleChange}>
             <div className='row'>
               <div className='col-md-4'>
                 <Field name='startDate' component={DatePicker} floatingLabelText='Fecha Inicio' validate={[required]} />
@@ -63,6 +63,7 @@ class FiltersForm extends Component {
 
 FiltersForm.propTypes = {
   handleSubmit: PropTypes.func,
+  handleChange: PropTypes.func,
   providers: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,

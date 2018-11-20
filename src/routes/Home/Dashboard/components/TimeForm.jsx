@@ -24,6 +24,7 @@ class SelectDate extends Component {
 
 SelectDate.propTypes = {
   handleSubmit: PropTypes.func,
+  handleChange: PropTypes.func,
 }
 
 const SelectDateView = reduxForm({
