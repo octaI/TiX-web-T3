@@ -19,10 +19,20 @@ const renderLeftIcon = (user, logout, stopImpersonalization) => {
   if (!user) {
     return <FlatButton href='/about' label='Sobre el proyecto' />;
   }
-  const menuItems = [<MenuItem onTouchTap={logout} primaryText='Cerrar sesión' />];
+  const menuItems = [(
+    <MenuItem
+      key='closeSession'
+      onTouchTap={logout}
+      primaryText='Cerrar sesión'
+    />
+  )];
   if (user.isImpersonating) {
     menuItems.push(
-      <MenuItem onTouchTap={stopImpersonalization} primaryText='Terminar Impersonalización'/>
+      <MenuItem
+        key='stopImpersonation'
+        onTouchTap={stopImpersonalization}
+        primaryText='Terminar impersonalización'
+      />
     );
   }
   return (
@@ -46,7 +56,7 @@ export const Header = props => (
       style={{ backgroundColor: '#c64e31' }}
       onTitleTouchTap={props.redirectToHome}
     />
-      <div className='beta-banner'>{ 'Versión Beta' }</div>
+    <div className='beta-banner'>{ 'Versión Beta' }</div>
 
     <Alert alerts={props.alerts} clearAlert={props.clearAlert} />
   </header>

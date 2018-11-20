@@ -18,7 +18,6 @@ class UsernameForm extends Component {
           <TextField
             type='string'
             name='username'
-            component={TextField}
             hintText={this.props.user.username}
             floatingLabelText='Email' />
           <Field

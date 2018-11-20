@@ -33,12 +33,14 @@ class SidebarView extends Component {
     if (user.role === 'admin') {
       return (
         <ListItem
+          key='admin'
           primaryText={'Panel de Administración'}
           containerElement={<Link to='/home/admin/users' />}
           value='/home/admin/users'
           open={true}
           nestedItems={[
             <ListItem
+              key='admin0'
               primaryText={'Gráficos de Utilización'}
               containerElement={<Link to='/home/admin/ispchart' />}
               value='/home/admin/ispchart'
@@ -69,18 +71,21 @@ class SidebarView extends Component {
 
         <Subheader>Configuración</Subheader>
         <ListItem
+          key='config0'
           primaryText={'Ver Instalaciones'}
           leftIcon={<Pencil />}
           containerElement={<Link to='/home/installation/view' />}
           value='/home/installation/view'
           />
         <ListItem
+          key='config1'
           primaryText={'Mi cuenta'}
           leftIcon={<Wrench />}
           containerElement={<Link to='/home/account' />}
           value='/home/account'
         />
         <ListItem
+          key='config2'
           primaryText={'Reporte de usuario'}
           leftIcon={<Pencil />}
           containerElement={<Link to='/home/userreport' />}
