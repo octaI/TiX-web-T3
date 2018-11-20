@@ -10,13 +10,13 @@ import './Dashboard.scss';
 class SelectDate extends Component {
 
   render() {
-    const { handleSubmit } = this.props;
+    const { handleSubmit, handleChange } = this.props;
     return (
       <Paper style={{ marginTop: '15px' }} zDepth={1}>
-        <form className='form-alignment' onSubmit={handleSubmit}>
+        <form className='form-alignment' onSubmit={handleSubmit} onChange={handleChange}>
           <Field name='startDate' component={DatePicker} floatingLabelText='Fecha Inicio' />
-          <Field name='endDate' component={DatePicker} floatingLabelText='Fecha Final' />
-          <button className='btn btn-primary btn-large' type='submit' >Filtrar</button>
+          <Field name='endDate'   component={DatePicker} floatingLabelText='Fecha Final' />
+          <button className='btn btn-primary btn-large' type='submit'>Filtrar</button>
         </form>
       </Paper>);
   }

@@ -30,21 +30,27 @@ class DashboardView extends Component {
     this.props.fetchProviders(user.id);
     this.installationId = routeParams.installationId;
     this.providerId = routeParams.providerId;
-    this.setState({ selectedIndex:0 });
+    this.setState({ selectedIndex: 0 });
     this.selectDownstream = this.selectDownstream.bind(this);
     this.selectUpstream = this.selectUpstream.bind(this);
     this.selectGeneral = this.selectGeneral.bind(this);
     this.selectDates = this.selectDates.bind(this);
+    this.changeDate = this.changeDate.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.installationId !== nextProps.routeParams.installationId
-      || this.providerId !== nextProps.routeParams.providerId) {
+         || this.providerId !== nextProps.routeParams.providerId) {
       this.providerId = nextProps.routeParams.providerId;
       this.installationId = nextProps.routeParams.installationId;
+      let startDate = this.state.startDate;
+      let endDate   = this.state.endDate;
+      if (this.state.startDate !== null && typeof this.state.startDate !== "string") {
+        startDate = this.state.startDate.format('YYYY-MM-DD');
+        endDate   = this.state.endDate.format('YYYY-MM-DD');
+      }
       nextProps.fetchReports(nextProps.user.id, nextProps.routeParams.installationId,
-        nextProps.routeParams.providerId, this.state.startDate.format('YYYY-MM-DD'),
-        this.state.endDate.format('YYYY-MM-DD'));
+        nextProps.routeParams.providerId, startDate, endDate);
       this.setState({ selectedIndex: 0 });
     }
     if (nextProps.reports) {
@@ -131,6 +137,10 @@ class DashboardView extends Component {
       moment(dates.startDate).format('YYYY-MM-DD'), moment(dates.endDate).format('YYYY-MM-DD'));
   }
 
+  changeDate(dates) {
+    this.selectDates(dates);
+  }
+
   getProviderName(providerId) {
     if (providerId === '0') return 'General';
     const providerName = this.props.providers[providerId];
@@ -141,7 +151,7 @@ class DashboardView extends Component {
   render() {
     return (
       <div>
-        <SelectDate onSubmit={this.selectDates} />
+        <SelectDate onSubmit={this.selectDates} onChange={this.changeDate} />
         <Paper style={{ marginTop: '15px' }}>
           <BottomNavigation selectedIndex={this.state.selectedIndex}>
             <BottomNavigationItem
