@@ -7,6 +7,7 @@ Things to fix
 * Tiene sentido que "Reporte de usuario" esté en la sección "Configuración"?
 * Poder modificar la escala de los gráficos; que las fechas aclaren el año
 * Al cambiar entre isp's, queda el gráfico (o falta de él) del anterior
+* Mensajes de error si los filtros son inválidos (e.g., fecha inicio > fecha final)
 
 Solved?
 -------

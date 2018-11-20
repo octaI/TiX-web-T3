@@ -34,7 +34,7 @@
       }
     },
     "dev": {
-      "command": "nodemon bin/dev-server --ignore dist --ignore coverage --ignore tests --ignore node_modules",
+      "command": "nodemon bin/dev-server -e js,jsx,css,scss --ignore dist --ignore coverage --ignore tests --ignore node_modules",
       "env": {
         "NODE_ENV": "development",
         "DEBUG": "app:*"
