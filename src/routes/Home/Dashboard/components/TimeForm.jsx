@@ -16,7 +16,7 @@ class SelectDate extends Component {
         <form className='form-alignment' onSubmit={handleSubmit} onChange={handleChange}>
           <Field name='startDate' component={DatePicker} floatingLabelText='Fecha Inicio' />
           <Field name='endDate'   component={DatePicker} floatingLabelText='Fecha Final' />
-          <button className='btn btn-primary btn-large' type='submit'>Últimos datos</button>
+          <button className='btn btn-primary btn-large' type='submit'>Ver últimos datos</button>
         </form>
       </Paper>);
   }

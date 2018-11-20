@@ -27,6 +27,7 @@ class DashboardView extends Component {
     });
     this.props.fetchReports(user.id, routeParams.installationId,
       routeParams.providerId, moment().subtract(1, 'days').format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
+    this.fetchLastDataPoint(this.props);
     this.props.fetchProviders(user.id);
     this.installationId = routeParams.installationId;
     this.providerId = routeParams.providerId;
