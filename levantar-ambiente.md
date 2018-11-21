@@ -3,16 +3,20 @@
 Para levantar server local
 --------------------------
 
+```bash
 $ git clone git@github.com:TiX-measurements/tix-api-deploy.git
 $ cd tix-api-deploy
+```
 
 Editar docker-compose.yml para cambiar
-    image: mysql
+    *image: mysql*
 por
-    image: mysql:5.5
+    *image: mysql:5.5*
 Poner dump en la carpeta especificada (/storage/docker/sql-dump o podés cambiarla).
 
+```bash
 $ docker-compose up [-d]
+```
 
 Ojalá funcione. -d para que se detachee.
 Una vez levantado y corriendo podés probar haciendo requests,
@@ -27,6 +31,39 @@ mysql> UPDATE user SET salt="3czl3RBrkcNT/6W5NhfO7BP8jCtf1b1YBuF6dtRf/kSoEaWWnnZ
 
 (1) Si no importa el dump por algun motivo raro: cat tixdump.sql | docker exec -i test-mysql mysql -u"root" -p"root" tix para importarlo a mano.
 (2) Si tira error de Autenticacion al levantar la api, realizar el siguiente comando en la consola mysql: ALTER USER tix IDENTIFIED WITH mysql_native_password BY 'tix'; (Esto solo sucede con la version mysql >8)
+
+## Versión desde Docker Hub (no funcionan un par de cosas)
+
+De ahora en más desde la carpeta tix-api-deploy/ correr `docker-compose up [-d]`
+
+## Versión desde el repo
+
+Hecho lo anterior para la primera corrida, frenar el docker-compose y
+
+```bash
+$ docker-compose up mysql tix-iptoas
+$ cd ..
+$ git clone git@github.com:TiX-measurements/tix-api.git
+$ cd tix-api
+$ docker build -t tix-api-local .
+$ docker run --network tix-api-deploy_default -it tix-api-local        (3)
+```
+
+Ahora hay que averiguar la IP del contenedor...
+
+```bash
+$ docker ps
+$ docker inspect [nombre del contenedor] | grep IPAddress
+```
+
+... y ponerla con puerto 3001 en *TiX-web-T3/src/utils/fetch.js*. Ejemplo:
+```javascript
+    ...
+    const fullUrl = `http://172.18.0.3:3001/api${url}`;
+    ...
+```
+
+(3) Tal vez el nombre de red sea otro; chequear con `docker network ls`.
 
 Para levantar ambiente de desarrollo de tix-web
 -----------------------------------------------

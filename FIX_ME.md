@@ -13,7 +13,6 @@ Things to fix
 * Los gráficos muestran el rango que tiene datos, en vez de todo el rango elegido
 * Filtros de reporte: mostrar por default el último buscado
 * Aclarar que el instalador es para Debian-based
-* Page title dice "Tix App" en vez de "TiX App"
 * Si se carga la página de una instalación distinta a la idx 0, igual aparece la 0 desplegada
 * Installation graphs: Al cambiar el rango (incluso con el botón) se olvida de la opción up/down-stream
 
@@ -21,6 +20,7 @@ Solved?
 -------
 
 * Lista de Panel de Admin en sidebar no queda desplegada : (mc) ahora siempre abierta
+* Page title dice "Tix App" en vez de "TiX App" : (mc)
 
 
 
