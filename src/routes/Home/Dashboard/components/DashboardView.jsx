@@ -22,8 +22,8 @@ class DashboardView extends Component {
       routeParams,
     } = this.props;
     this.setState({
-      startDate: moment().subtract(1, 'days'),
-      endDate: moment(),
+      startDate: moment().subtract(1, 'days').format('YYYY-MM-DD'),
+      endDate: moment().format('YYYY-MM-DD'),
     });
     this.props.fetchReports(user.id, routeParams.installationId,
       routeParams.providerId, moment().subtract(1, 'days').format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
@@ -47,7 +47,7 @@ class DashboardView extends Component {
       this.installationId = nextProps.routeParams.installationId;
       let startDate = this.state.startDate;
       let endDate   = this.state.endDate;
-      if (this.state.startDate !== null && typeof this.state.startDate !== "string") {
+      if (startDate !== null && typeof startDate !== "string") {
         startDate = this.state.startDate.format('YYYY-MM-DD');
         endDate   = this.state.endDate.format('YYYY-MM-DD');
       }
@@ -137,6 +137,7 @@ class DashboardView extends Component {
   }
 
   showLastMonthOfData() {
+    console.log(this.props.reports.lastDate);//
     const lastDate = this.props.reports.lastDate;
     const {
       user,
@@ -184,7 +185,11 @@ class DashboardView extends Component {
   render() {
     return (
       <div>
-        <SelectDate onSubmit={this.showLastMonthOfData} onChange={this.changeDate} />
+        <SelectDate
+          onSubmit={this.showLastMonthOfData}
+          onChange={this.changeDate}
+          start={moment(this.props.reports.lastDate, 'YYYY-MM-DD').subtract(1, 'month').toDate()}
+          end={  moment(this.props.reports.lastDate, 'YYYY-MM-DD').toDate()} />
         <Paper style={{ marginTop: '15px' }}>
           <BottomNavigation selectedIndex={this.state.selectedIndex}>
             <BottomNavigationItem

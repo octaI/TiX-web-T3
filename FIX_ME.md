@@ -7,10 +7,14 @@ Things to fix
 * Tiene sentido que "Reporte de usuario" esté en la sección "Configuración"?
 * Poder modificar la escala de los gráficos; que las fechas aclaren el año
 * Al cambiar entre isp's, queda el gráfico (o falta de él) del anterior
-* Mensajes de error si los filtros son inválidos (e.g., fecha inicio > fecha final)
+* Mensajes de error si los filtros son inválidos (e.g., fecha inicio >= fecha final)
 * Filtros de reportes: Opción "Todos" (días de la semana) no parece funcionar como debería
 * Abstraer host:port address
 * Los gráficos muestran el rango que tiene datos, en vez de todo el rango elegido
+* Filtros de reporte: mostrar por default el último buscado
+* Aclarar que el instalador es para Debian-based
+* Page title dice "Tix App" en vez de "TiX App"
+* Si se carga la página de una instalación distinta a la idx 0, igual aparece la 0 desplegada
 
 Solved?
 -------
