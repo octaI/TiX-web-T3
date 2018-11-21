@@ -137,7 +137,6 @@ class DashboardView extends Component {
   }
 
   showLastMonthOfData() {
-    console.log(this.props.reports.lastDate);//
     const lastDate = this.props.reports.lastDate;
     const {
       user,

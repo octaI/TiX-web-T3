@@ -51,9 +51,6 @@ const SelectDateView = reduxForm({
     startDate: new Date(moment().subtract(1, 'day').subtract(1, 'month')),
     endDate:   new Date(moment().subtract(1, 'day')),
   },
-  // enableReinitialize: true,
-  // keepDirtyOnReinitialize: true,
-  // updateUnregisteredFields: true,
 })(SelectDate);
 
 export default SelectDateView;
