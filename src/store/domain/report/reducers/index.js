@@ -4,7 +4,8 @@ import {
   FETCH_REPORTS,
   FETCH_LAST_REPORT_DATE,
   FETCH_ALL_REPORTS,
-  FETCH_ADMIN_REPORTS
+  FETCH_ADMIN_REPORTS,
+  FETCH_LAST_ADMIN_REPORT_DATE
 } from '../actions';
 import { LOGOUT_USER } from '../../account/actions';
 
@@ -119,6 +120,21 @@ export default typeToReducer({
         version,
         provider: 1,
         adminReport: action.payload,
+      };
+    },
+  },
+  [FETCH_LAST_ADMIN_REPORT_DATE]: {
+    FULFILLED: (state, action) => {
+      let lastDate = null;
+      action.payload.forEach((measure) => {
+        if (!lastDate
+            || moment(measure.timestamp).isAfter(moment(lastDate).add(25, 'minutes'))) {
+          lastDate = measure.timestamp;
+        }
+      });
+      return {
+        ...state,
+        adminLastDate: lastDate,
       };
     },
   },

@@ -188,7 +188,8 @@ class DashboardView extends Component {
           onSubmit={this.showLastMonthOfData}
           onChange={this.changeDate}
           start={moment(this.props.reports.lastDate, 'YYYY-MM-DD').subtract(1, 'month').toDate()}
-          end={  moment(this.props.reports.lastDate, 'YYYY-MM-DD').toDate()} />
+          end={  moment(this.props.reports.lastDate, 'YYYY-MM-DD').toDate()}
+        />
         <Paper style={{ marginTop: '15px' }}>
           <BottomNavigation selectedIndex={this.state.selectedIndex}>
             <BottomNavigationItem

@@ -5,7 +5,10 @@ import R from 'ramda';
 import { Card, CardTitle, CardText } from 'material-ui/Card';
 import moment from 'moment';
 import { CSVLink } from 'react-csv';
-import { fetchAdminReports } from '../../../../../store/domain/report/actions';
+import {
+  fetchAdminReports,
+  fetchLastAdminReportDate
+} from '../../../../../store/domain/report/actions';
 import HistogramChart from '../../../../../components/Charts/HistogramChart';
 import FiltersForm from './FiltersForm';
 import { fetchProviders } from '../../../../../store/domain/provider/actions';
@@ -14,14 +17,28 @@ class AdminView extends Component {
 
   componentWillMount() {
     this.props.fetchProviders(this.props.user.id);
-    this.setState({ version: 0 });
+    this.setState({
+      version: 0,
+      startDate: moment().subtract(1, 'days').format('YYYY-MM-DD'),
+      startDate: moment().format('YYYY-MM-DD'),
+    });
+    this.fetchLastDataPoint(this.props);
     this.filterReports = this.filterReports.bind(this);
+    this.fetchLastDataPoint = this.fetchLastDataPoint.bind(this);
+    this.showLastMonthOfData = this.showLastMonthOfData.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.reports && this.state.version !== nextProps.reports.version) {
       this.calculateBins(nextProps.reports);
     }
+    this.fetchLastDataPoint(nextProps);
+  }
+
+  fetchLastDataPoint(props) {
+    const prov = this.state && this.state.filters ? this.state.filters.isp
+      : (this.props.provider ? this.props.provider : 1); // ToDo: hardcodeo
+    props.fetchLastAdminReportDate(prov, moment().format('YYYY-MM-DD'));
   }
 
   calculateBins(measures) {
@@ -55,6 +72,24 @@ class AdminView extends Component {
         return;
       }
       w++;
+    }
+  }
+
+  showLastMonthOfData() {
+    const lastDate = this.props.lastDate;
+    if (lastDate) {
+      const lastReportDate = moment(lastDate, "YYYY-MM-DDTHH:mm:ss.SSSSZ");
+      const end = lastReportDate.format('YYYY-MM-DD');
+      const start = lastReportDate.subtract(1, 'month').format('YYYY-MM-DD');
+      this.setState({
+        startDate: start,
+        endDate: end,
+      });
+      const prov = this.state && this.state.filters ? this.state.filters.isp
+        : (this.props.provider ? this.props.provider : 1); // ToDo: hardcodeo
+      this.props.fetchAdminReports(prov, start, end);
+    } else {
+      this.fetchLastDataPoint(this.props);
     }
   }
 
@@ -151,7 +186,13 @@ class AdminView extends Component {
     } = this.props;
     return (
       <div>
-        <FiltersForm providers={providers} onSubmit={this.filterReports} onChange={this.filterReports} />
+        <FiltersForm
+          providers={providers}
+          onSubmit={this.showLastMonthOfData}
+          onChange={this.filterReports}
+          start={moment(this.props.lastDate, 'YYYY-MM-DD').subtract(1, 'month').toDate()}
+          end={  moment(this.props.lastDate, 'YYYY-MM-DD').toDate()}
+        />
         {this.renderCsvDownload()}
         {this.renderHistograms()}
       </div>
@@ -171,25 +212,32 @@ AdminView.propTypes = {
     upQuality: PropTypes.number,
     downQuality: PropTypes.number,
   }),
+  lastDate: PropTypes.string,
   providers: PropTypes.shape({
     name: PropTypes.string,
   }),
   provider: PropTypes.string,
   fetchProviders: PropTypes.func,
   fetchAdminReports: PropTypes.func,
+  fetchLastAdminReportDate: PropTypes.func,
 };
 
 const mapStateToProps = store => ({
   user: store.account.user,
   reports: R.path(['reports', 'adminReport'], store),
+  lastDate: R.path(['reports', 'adminLastDate'], store),
   provider: store.reports.provider,
   version: store.reports.version,
   providers: store.providers,
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchAdminReports: (isp, startDate, endDate) => dispatch(fetchAdminReports(isp, startDate, endDate)),
-  fetchProviders: userId => dispatch(fetchProviders(userId)),
+  fetchProviders: userId =>
+    dispatch(fetchProviders(userId)),
+  fetchAdminReports: (isp, startDate, endDate) =>
+    dispatch(fetchAdminReports(isp, startDate, endDate)),
+  fetchLastAdminReportDate: (isp, endDate) =>
+    dispatch(fetchLastAdminReportDate(isp, endDate)),
 });
 
 export default connect(

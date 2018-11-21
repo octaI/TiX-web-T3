@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, change } from 'redux-form';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import MenuItem from 'material-ui/MenuItem';
@@ -15,6 +15,22 @@ const required = value => value ? undefined : 'Requerido';
 
 class FiltersForm extends Component {
 
+  componentWillMount() {
+    this.state = {
+      start: moment().subtract(1, 'day').subtract(1, 'month').toDate(),
+      end:   moment().subtract(1, 'day').toDate(),
+    };
+    this.changeDate = this.changeDate.bind(this);
+  }
+
+  changeDate(a) {
+    if (typeof this.props.start != 'undefined') {
+      this.props.dispatch(change('filterForm', 'startDate', this.props.start));
+      this.props.dispatch(change('filterForm',   'endDate', this.props.end));
+    }
+    this.props.handleSubmit(a);
+  }
+
   render() {
     const { providers, handleSubmit, handleChange } = this.props;
     if (Object.keys(providers).length === 0) {
@@ -26,11 +42,11 @@ class FiltersForm extends Component {
           title='Filtros de reporte'
         />
         <CardText>
-          <form onSubmit={handleSubmit} onChange={handleChange}>
+          <form onSubmit={this.changeDate} onChange={handleChange}>
             <div className='row'>
               <div className='col-md-4'>
-                <Field name='startDate' component={DatePicker} floatingLabelText='Fecha Inicio' validate={[required]} />
-                <Field name='endDate'   component={DatePicker} floatingLabelText='Fecha Fin'    validate={[required]} />
+                <Field name='startDate' component={DatePicker} floatingLabelText='Fecha inicio' validate={[required]} />
+                <Field name='endDate'   component={DatePicker} floatingLabelText='Fecha final'  validate={[required]} />
               </div>
               <div className='col-md-4'>
                 <Field name='dayOfWeek' component={SelectField} floatingLabelText='Día de la semana' >
@@ -49,11 +65,11 @@ class FiltersForm extends Component {
                 </Field>
               </div>
               <div className='col-md-4'>
-                <Field name='startTime' component={TextField} floatingLabelText='Hora Inicio' />
-                <Field name='endTime'   component={TextField} floatingLabelText='Hora Final' />
+                <Field name='startTime' component={TextField} floatingLabelText='Hora inicio' />
+                <Field name='endTime'   component={TextField} floatingLabelText='Hora final' />
               </div>
             </div>
-            <RaisedButton className='settings-button-margin' label='Filtrar' type='submit' />
+            <RaisedButton className='settings-button-margin' label='Ver últimos datos' type='submit' />
           </form>
         </CardText>
       </Card>
@@ -68,14 +84,16 @@ FiltersForm.propTypes = {
     id: PropTypes.string,
     name: PropTypes.string,
   }),
+  start: PropTypes.instanceOf(Date),
+  end:   PropTypes.instanceOf(Date),
 };
 
 const FiltersFormView = reduxForm({
-  form: 'usernameForm',
+  form: 'filterForm',
   initialValues: {
     startDate: new Date(moment().subtract(1, 'day').subtract(1, 'month')),
     endDate:   new Date(moment().subtract(1, 'day')),
-    isp:       1
+    isp:       1, // ToDo
   },
 })(FiltersForm);
 
