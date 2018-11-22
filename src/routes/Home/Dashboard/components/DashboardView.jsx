@@ -57,7 +57,7 @@ class DashboardView extends Component {
       this.setState({ selectedIndex: 0 });
     }
     if (nextProps.reports) {
-      this.setData(nextProps.reports);
+      this.setData(nextProps.reports, 0);
     }
   }
 
@@ -70,68 +70,47 @@ class DashboardView extends Component {
       routeParams.providerId, moment().format('YYYY-MM-DD'));
   }
 
-  setData(reports) {
+  setData(reports, mode) {
     this.fechas = reports.dates;
-    this.data = [
-      {
+    this.data = [];
+    if (mode === 0 || mode === 1) {
+      this.data.push({
         data: reports.upUsage,
-        name: 'Utilización Up',
-      },
-      {
-        data: reports.downUsage,
-        name: 'Utilización Down',
-      },
-      {
+        name: 'Utilización up',
+      }, {
         data: reports.upQuality,
-        name: 'Calidad Up',
-      },
-      {
-        data: reports.downQuality,
-        name: 'Calidad Down',
-      },
-    ];
-  }
-
-  setUpstreamData(reports) {
-    this.data = [
-      {
-        data: reports.upUsage,
-        name: 'Utilización Up',
-      },
-      {
-        data: reports.upQuality,
-        name: 'Calidad Up',
-      },
-    ];
-  }
-
-  setDownstreamData(reports) {
-    this.data = [
-      {
+        name: 'Calidad up',
+      });
+    } else {
+      this.data.push({name:' '}, {name:' '});
+    }
+    if (!(mode === 0 || mode === 2)) {
+      this.data.push({name:' '}, {name:' '});
+    } else {
+      this.data.push({
         data: reports.downUsage,
-        name: 'Utilización Down',
-      },
-      {
+        name: 'Utilización down',
+      }, {
         data: reports.downQuality,
-        name: 'Calidad Down',
-      },
-    ];
+        name: 'Calidad down',
+      });
+    }
   }
 
   selectGeneral() {
-    this.setData(this.props.reports);
+    this.setData(this.props.reports, 0);
     this.setState({ selectedIndex:0 });
     this.forceUpdate();
   }
 
   selectUpstream() {
-    this.setUpstreamData(this.props.reports);
+    this.setData(this.props.reports, 1);
     this.setState({ selectedIndex:1 });
     this.forceUpdate();
   }
 
   selectDownstream() {
-    this.setDownstreamData(this.props.reports);
+    this.setData(this.props.reports, 2);
     this.setState({ selectedIndex:2 });
     this.forceUpdate();
   }
