@@ -31,7 +31,9 @@ class DashboardView extends Component {
     this.props.fetchProviders(user.id);
     this.installationId = routeParams.installationId;
     this.providerId = routeParams.providerId;
-    this.setState({ selectedIndex: 0 });
+    this.setState({
+      selectedIndex: 0
+    });
     this.selectDownstream = this.selectDownstream.bind(this);
     this.selectUpstream = this.selectUpstream.bind(this);
     this.selectGeneral = this.selectGeneral.bind(this);
@@ -54,10 +56,10 @@ class DashboardView extends Component {
       nextProps.fetchReports(nextProps.user.id, nextProps.routeParams.installationId,
         nextProps.routeParams.providerId, startDate, endDate);
       this.fetchLastDataPoint(nextProps);
-      this.setState({ selectedIndex: 0 });
     }
     if (nextProps.reports) {
-      this.setData(nextProps.reports, 0);
+      const idx = this.state.selectedIndex;
+      this.setData(nextProps.reports, idx ? idx : 0 );
     }
   }
 
@@ -97,22 +99,26 @@ class DashboardView extends Component {
     }
   }
 
-  selectGeneral() {
-    this.setData(this.props.reports, 0);
-    this.setState({ selectedIndex:0 });
+  // One of 0 (up & down), 1 (up), 2 (down)
+  selectStreamMode(mode) {
+    if (mode < 0 || mode > 2) mode = 0;
+    this.setData(this.props.reports, mode);
+    this.setState({
+      selectedIndex: mode
+    });
     this.forceUpdate();
+  }
+
+  selectGeneral() {
+    this.selectStreamMode(0);
   }
 
   selectUpstream() {
-    this.setData(this.props.reports, 1);
-    this.setState({ selectedIndex:1 });
-    this.forceUpdate();
+    this.selectStreamMode(1);
   }
 
   selectDownstream() {
-    this.setData(this.props.reports, 2);
-    this.setState({ selectedIndex:2 });
-    this.forceUpdate();
+    this.selectStreamMode(2);
   }
 
   showLastMonthOfData() {
