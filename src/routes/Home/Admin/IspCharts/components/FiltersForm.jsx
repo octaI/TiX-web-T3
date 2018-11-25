@@ -70,14 +70,14 @@ class FiltersForm extends Component {
               </div>
               <div className='col-md-4'>
                 <Field name='dayOfWeek' component={SelectField} floatingLabelText='Día de la semana'>
-                  <MenuItem value='0' primaryText='Todos' />
-                  <MenuItem value='1' primaryText='Lunes' />
-                  <MenuItem value='2' primaryText='Martes' />
-                  <MenuItem value='3' primaryText='Miércoles' />
-                  <MenuItem value='4' primaryText='Jueves' />
-                  <MenuItem value='5' primaryText='Viernes' />
-                  <MenuItem value='6' primaryText='Sábado' />
-                  <MenuItem value='7' primaryText='Domingo' />
+                  <MenuItem value={0} primaryText='Todos' />
+                  <MenuItem value={1} primaryText='Domingo' />
+                  <MenuItem value={2} primaryText='Lunes' />
+                  <MenuItem value={3} primaryText='Martes' />
+                  <MenuItem value={4} primaryText='Miércoles' />
+                  <MenuItem value={5} primaryText='Jueves' />
+                  <MenuItem value={6} primaryText='Viernes' />
+                  <MenuItem value={7} primaryText='Sábado' />
                 </Field>
                 <Field name='isp' component={SelectField} floatingLabelText='ISP' validate={[required]} onChange={this.saveIsp}>
                   {Object.keys(providers).map(key =>

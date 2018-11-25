@@ -23,6 +23,7 @@ class AdminView extends Component {
       startDate: moment().format('YYYY-MM-DD'),
     });
     this.fetchLastDataPoint(this.props);
+    this.isMeasureIncluded = this.isMeasureIncluded.bind(this);
     this.filterReports = this.filterReports.bind(this);
     this.fetchLastDataPoint = this.fetchLastDataPoint.bind(this);
     this.showLastMonthOfData = this.showLastMonthOfData.bind(this);
@@ -37,8 +38,16 @@ class AdminView extends Component {
 
   fetchLastDataPoint(props) {
     const prov = this.state && this.state.filters ? this.state.filters.isp
-      : (this.props.provider ? this.props.provider : 1); // ToDo: hardcodeo
+      : (this.props.provider ? this.props.provider : 1);
     props.fetchLastAdminReportDate(prov, moment().format('YYYY-MM-DD'));
+  }
+
+  isMeasureIncluded(f, mDate) {
+    return (
+      (!f.dayOfWeek || f.dayOfWeek === 0 || mDate.day() === (f.dayOfWeek - 1))
+      && (!f.startTime ||  f.startTime <= mDate.hour())
+      && (!f.endTime   || mDate.hour() <= f.endTime)
+    ); // Faltaría chequear startDate <= endDate y startTime <= endTime
   }
 
   calculateBins(measures) {
@@ -49,12 +58,7 @@ class AdminView extends Component {
     this.downQualityBins = new Array(10).fill(0);
     this.theresData = false;
     measures.forEach((measure) => {
-      const date = moment(measure.timestamp);
-      if ((filters.dayOfWeek && (date.day() === filters.dayOfWeek - 1 || filters.dayOfWeek === 0)) ||
-        (filters.startTime && date.hour() >= filters.startTime && filters.endTime && date.hour() <= filters.endTime) ||
-        (!filters.endTime && filters.startTime && date.hour() >= filters.startTime) ||
-        (!filters.startTime && filters.endTime && date.hour() <= filters.endTime) ||
-        (!filters.dayOfWeek && !filters.startTime && !filters.endTime)) {
+      if (this.isMeasureIncluded(filters, moment(measure.timestamp))) {
         this.assignBins(this.upUsageBins, measure.upUsage);
         this.assignBins(this.downUsageBins, measure.downUsage);
         this.assignBins(this.upQualityBins, measure.upQuality);
