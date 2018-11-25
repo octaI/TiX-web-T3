@@ -19,7 +19,7 @@ class LoginForm extends Component {
           <form onSubmit={handleSubmit} className='hgroup'>
             <Field type='text' name='username' component={TextField} floatingLabelText='Email' />
             <Field type='password' name='password' component={TextField} floatingLabelText={'Contraseña'} />
-            <RaisedButton className='button-size' primary label='Log in'type='submit' />
+            <RaisedButton className='button-size' primary label='Log in' type='submit' />
             <Link className='password-forgot-text' to='/recover' style={{ marginTop: '10px' }}> ¿Olvidó su contraseña? </Link>
           </form>
         </div>

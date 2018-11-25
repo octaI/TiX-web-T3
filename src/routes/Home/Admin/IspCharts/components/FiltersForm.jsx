@@ -19,20 +19,28 @@ class FiltersForm extends Component {
     this.state = {
       start: moment().subtract(1, 'day').subtract(1, 'month').toDate(),
       end:   moment().subtract(1, 'day').toDate(),
+      preferredIsp: 1,
     };
     this.changeDate = this.changeDate.bind(this);
+    this.saveIsp = this.saveIsp.bind(this);
   }
 
-  changeDate(a) {
+  changeDate(event) {
     if (typeof this.props.start != 'undefined') {
       this.props.dispatch(change('filterForm', 'startDate', this.props.start));
       this.props.dispatch(change('filterForm',   'endDate', this.props.end));
     }
-    this.props.handleSubmit(a);
+    this.props.handleSubmit(event);
+  }
+
+  saveIsp(event) {
+    this.setState({
+      preferredIsp: event.isp,
+    });
   }
 
   render() {
-    const { providers, handleSubmit, handleChange } = this.props;
+    const { providers } = this.props;
     if (Object.keys(providers).length === 0) {
       return <span>wait</span>;
     }
@@ -42,14 +50,14 @@ class FiltersForm extends Component {
           title='Filtros de reporte'
         />
         <CardText>
-          <form onSubmit={this.changeDate} onChange={handleChange}>
+          <form onSubmit={this.changeDate}>
             <div className='row'>
               <div className='col-md-4'>
                 <Field name='startDate' component={DatePicker} floatingLabelText='Fecha inicio' validate={[required]} />
                 <Field name='endDate'   component={DatePicker} floatingLabelText='Fecha final'  validate={[required]} />
               </div>
               <div className='col-md-4'>
-                <Field name='dayOfWeek' component={SelectField} floatingLabelText='Día de la semana' >
+                <Field name='dayOfWeek' component={SelectField} floatingLabelText='Día de la semana'>
                   <MenuItem value='0' primaryText='Todos' />
                   <MenuItem value='1' primaryText='Lunes' />
                   <MenuItem value='2' primaryText='Martes' />
@@ -59,7 +67,7 @@ class FiltersForm extends Component {
                   <MenuItem value='6' primaryText='Sábado' />
                   <MenuItem value='7' primaryText='Domingo' />
                 </Field>
-                <Field name='isp' component={SelectField} floatingLabelText='ISP' validate={[required]}>
+                <Field name='isp' component={SelectField} floatingLabelText='ISP' validate={[required]} onChange={this.saveIsp}>
                   {Object.keys(providers).map(key =>
                     <MenuItem key={key} value={providers[key].id} primaryText={providers[key].name} /> )}
                 </Field>
@@ -88,13 +96,40 @@ FiltersForm.propTypes = {
   end:   PropTypes.instanceOf(Date),
 };
 
-const FiltersFormView = reduxForm({
-  form: 'filterForm',
+const mapStateToProps = (state, ownProps) => ({
   initialValues: {
-    startDate: new Date(moment().subtract(1, 'day').subtract(1, 'month')),
-    endDate:   new Date(moment().subtract(1, 'day')),
-    isp:       1, // ToDo
+    isp: state.preferredIsp || 1, //1, // ToDo
   },
-})(FiltersForm);
+});
+
+const FiltersFormView = reduxForm(
+  {
+    form: 'filterForm',
+    initialValues: {
+      startDate: new Date(moment().subtract(1, 'day').subtract(1, 'month')),
+      endDate:   new Date(moment().subtract(1, 'day')),
+      isp:       1, // ToDo
+    },
+  },
+  mapStateToProps
+)(FiltersForm);
+
+/// Forma ideal (algo tiene mal):
+// const mapFormToProps = {
+//   form: 'filterForm',
+// };
+//
+// const mapStateToProps = (state, ownProps) => ({
+//   initialValues: {
+//     startDate: new Date(moment().subtract(1, 'day').subtract(1, 'month')),
+//     endDate:   new Date(moment().subtract(1, 'day')),
+//     isp:       1,//this.state.preferredIsp || 1, //1, // ToDo
+//   },
+// });
+//
+// const FiltersFormView = reduxForm(
+//   mapFormToProps,
+//   mapStateToProps
+// )(FiltersForm);
 
 export default FiltersFormView;

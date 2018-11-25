@@ -25,6 +25,15 @@ export function setActiveInstallation(installationId, locationId) {
   };
 }
 
+export function setActualInstallation(installationId, locationId) {
+  const actualLocationId = locationId || 0;
+  return (dispatch) => dispatch({
+    type: SET_ACTIVE_INSTALLATION,
+    installationId,
+    actualLocationId,
+  });
+}
+
 export function deleteInstallation(userId, installationId) {
   return dispatch => dispatch({
     type: DELETE_INSTALLATION,
@@ -41,4 +50,3 @@ export function editInstallationName(userId, installationId, name) {
     payload: fetch(`/user/${userId}/installation/${installationId}`, { method: 'put', body }),
   });
 }
-

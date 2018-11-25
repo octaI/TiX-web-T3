@@ -9,6 +9,7 @@ import { BottomNavigation, BottomNavigationItem } from 'material-ui/BottomNaviga
 import Paper from 'material-ui/Paper';
 import { connect } from 'react-redux';
 import DashboardChart from '../../../../components/Charts/DashboardChart';
+import { setActualInstallation } from '../../../../store/domain/installation/actions';
 import { fetchReports, fetchLastReportDate } from '../../../../store/domain/report/actions';
 import { fetchProviders } from '../../../../store/domain/provider/actions';
 import SelectDate from './TimeForm';
@@ -21,6 +22,7 @@ class DashboardView extends Component {
       user,
       routeParams,
     } = this.props;
+    //this.props.setActualInstallationFunc(~~routeParams.installationId, ~~routeParams.providerId);
     this.setState({
       startDate: moment().subtract(1, 'days').format('YYYY-MM-DD'),
       endDate: moment().format('YYYY-MM-DD'),
@@ -214,6 +216,7 @@ DashboardView.propTypes = {
     installationId: PropTypes.string,
     providerId: PropTypes.string,
   }),
+  setActualInstallationFunc: PropTypes.func,
   fetchReports: PropTypes.func,
   fetchProviders: PropTypes.func,
   fetchLastReportDate: PropTypes.func,
@@ -242,6 +245,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(fetchProviders(userId)),
   fetchLastReportDate: (userId, installationId, providerId, endDate) =>
     dispatch(fetchLastReportDate(userId, installationId, providerId, endDate)),
+  setActualInstallationFunc: (installationId, locationId) =>
+    dispatch(setActualInstallation(installationId, locationId)),
 });
 
 export default connect(

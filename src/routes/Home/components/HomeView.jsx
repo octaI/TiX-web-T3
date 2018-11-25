@@ -27,9 +27,9 @@ class HomeView extends Component {
     if (this.id !== nextProps.user.id) {
       this.id = nextProps.user.id;
       nextProps.loadInstallations(nextProps.user.id);
-      if (nextProps.installations && nextProps.installations.list) {
-        console.log(Object.keys(nextProps.installations.list).length);
-      }
+      // if (nextProps.installations && nextProps.installations.list) {
+      //   console.log(Object.keys(nextProps.installations.list).length);
+      // }
     } else if (nextProps.location.pathname === '/home' && nextProps.installations && nextProps.installations.list &&
       Object.keys(nextProps.installations.list).length > 0) {
       nextProps.redirectToReport(Object.keys(nextProps.installations.list)[0], 0);
