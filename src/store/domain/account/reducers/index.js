@@ -4,6 +4,7 @@ import {
   LOGIN_USER,
   FETCH_USER,
   LOCAL_STORAGE_LOAD,
+  ISP_LOCAL_STORAGE_LOAD,
   FETCH_ALL_USERS,
   IMPERSONATE_USER,
   STOP_IMPERSONATION,
@@ -30,6 +31,13 @@ export default typeToReducer({
     ...state,
     user: {
       ...state.user,
+      ...action.payload,
+    },
+  }),
+  [ISP_LOCAL_STORAGE_LOAD]: (state, action) => ({
+    ...state,
+    preferredIsp: {
+      ...state.preferredIsp,
       ...action.payload,
     },
   }),

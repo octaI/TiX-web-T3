@@ -43,7 +43,6 @@ class AdminView extends Component {
 
   calculateBins(measures) {
     const filters = this.state.filters;
-    console.log(filters);//
     this.upUsageBins = new Array(10).fill(0);
     this.downUsageBins = new Array(10).fill(0);
     this.upQualityBins = new Array(10).fill(0);
@@ -77,7 +76,6 @@ class AdminView extends Component {
   }
 
   showLastMonthOfData() {
-    console.log("corre showLastMonthOfData");//
     const lastDate = this.props.lastDate;
     if (lastDate) {
       const lastReportDate = moment(lastDate, "YYYY-MM-DDTHH:mm:ss.SSSSZ");
@@ -96,7 +94,6 @@ class AdminView extends Component {
   }
 
   filterReports(data) {
-    console.log("MIAU");//
     this.state.filters = data;
     this.props.fetchAdminReports(data.isp,
       moment(data.startDate).format('YYYY-MM-DD'),

@@ -19,10 +19,20 @@ class FiltersForm extends Component {
     this.state = {
       start: moment().subtract(1, 'day').subtract(1, 'month').toDate(),
       end:   moment().subtract(1, 'day').toDate(),
-      preferredIsp: 1,
     };
     this.changeDate = this.changeDate.bind(this);
     this.saveIsp = this.saveIsp.bind(this);
+
+    const prefIspItem = localStorage.getItem('preferredIsp');
+    if (prefIspItem) {
+      const prefIsp = JSON.parse(prefIspItem).preferredIsp;
+      if (prefIsp !== this.state.preferredIsp) {
+        this.props.dispatch(change('filterForm', 'isp', prefIsp));
+        console.log("Cambio ISP en selector");//
+      }
+    } else {
+      this.props.dispatch(change('filterForm', 'isp', 1)); // default
+    }
   }
 
   changeDate(event) {
@@ -33,10 +43,12 @@ class FiltersForm extends Component {
     this.props.handleSubmit(event);
   }
 
-  saveIsp(event) {
+  saveIsp(event, selectedIsp) {
     this.setState({
-      preferredIsp: event.isp,
+      preferredIsp: selectedIsp,
     });
+    const isp = { 'preferredIsp': selectedIsp };
+    localStorage.setItem('preferredIsp', JSON.stringify(isp));
   }
 
   render() {
@@ -98,7 +110,7 @@ FiltersForm.propTypes = {
 
 const mapStateToProps = (state, ownProps) => ({
   initialValues: {
-    isp: state.preferredIsp || 1, //1, // ToDo
+    isp: state.preferredIsp || 1,
   },
 });
 
@@ -108,7 +120,6 @@ const FiltersFormView = reduxForm(
     initialValues: {
       startDate: new Date(moment().subtract(1, 'day').subtract(1, 'month')),
       endDate:   new Date(moment().subtract(1, 'day')),
-      isp:       1, // ToDo
     },
   },
   mapStateToProps
