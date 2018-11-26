@@ -7,7 +7,6 @@ Things to fix
 * Aclarar que el instalador es para Debian-based
 * Abstraer host:port address
 * Falta devolución de error en varios lados
-* Warnings en sección Filtros de reporte
 
 
 Solved
@@ -19,6 +18,7 @@ Solved
 * Filtros de reporte: mostrar por default el último buscado : (mc)
 * Al cambiar entre isp's, queda el gráfico (o falta de él) del anterior : (mc)
 * Filtros de reportes: Opción "Todos" (los días de la semana) no parece funcionar como debería : (mc)
+* Warnings en sección Filtros de reporte : (mc)
 
 
 Que van a quedar como "To do"

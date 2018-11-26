@@ -8,4 +8,3 @@ export function fetchProviders(userId) {
     payload: fetch(`/user/${userId}/provider`),
   });
 }
-

@@ -13,7 +13,7 @@ import HistogramChart from '../../../../../components/Charts/HistogramChart';
 import FiltersForm from './FiltersForm';
 import { fetchProviders } from '../../../../../store/domain/provider/actions';
 
-class AdminView extends Component {
+class IspCharts extends Component {
 
   componentWillMount() {
     this.props.fetchProviders(this.props.user.id);
@@ -215,22 +215,24 @@ class AdminView extends Component {
   }
 }
 
-AdminView.propTypes = {
+IspCharts.propTypes = {
   user: PropTypes.shape({
     id: PropTypes.number,
   }),
-  reports: PropTypes.shape({
-    version: PropTypes.number,
-    upUsage: PropTypes.number,
-    downUsage: PropTypes.number,
-    upQuality: PropTypes.number,
-    downQuality: PropTypes.number,
-  }),
+  reports: PropTypes.arrayOf(
+    PropTypes.shape({
+      version: PropTypes.number,
+      upUsage: PropTypes.number,
+      downUsage: PropTypes.number,
+      upQuality: PropTypes.number,
+      downQuality: PropTypes.number,
+    })
+  ),
   lastDate: PropTypes.string,
   providers: PropTypes.shape({
     name: PropTypes.string,
   }),
-  provider: PropTypes.string,
+  provider: PropTypes.number,//PropTypes.string,
   fetchProviders: PropTypes.func,
   fetchAdminReports: PropTypes.func,
   fetchLastAdminReportDate: PropTypes.func,
@@ -257,4 +259,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(AdminView);
+)(IspCharts);
