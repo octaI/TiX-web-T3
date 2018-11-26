@@ -167,6 +167,13 @@ class AdminView extends Component {
       providers,
       provider,
     } = this.props;
+    let selectedProviderName = "";
+    if (this.state.filters) {
+      const ispId = this.state.filters.isp;
+      if (providers[ispId]) {
+        selectedProviderName = providers[ispId].name;
+      }
+    }
     if (!this.upUsageBins || !this.theresData) {
       return <div />;
     }
@@ -177,7 +184,10 @@ class AdminView extends Component {
           subtitle='Descargar los datos RAW para análisis'
         />
         <CardText>
-          <CSVLink data={this.props.reports} separator={','} filename={`reporte-${providers[provider].name}.csv`}>
+          <CSVLink
+            data={this.props.reports}
+            separator={','}
+            filename={`reporte-${selectedProviderName}.csv`}>
             Descargar
           </CSVLink>
         </CardText>
