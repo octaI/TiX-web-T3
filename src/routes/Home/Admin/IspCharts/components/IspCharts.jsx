@@ -181,7 +181,7 @@ class AdminView extends Component {
       <Card className='card-margins'>
         <CardTitle
           title='Descarga de CSV'
-          subtitle='Descargar los datos RAW para análisis'
+          subtitle='Descargar los datos RAW (del rango de fechas para el ISP) para análisis'
         />
         <CardText>
           <CSVLink
