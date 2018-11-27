@@ -10,7 +10,7 @@ function getAuthentication(token) {
 export default function isoFetch(url, options = {}) {
   const method = options.method || 'GET';
   const body = JSON.stringify(options.body) || undefined;
-  const fullUrl = `http://172.18.0.3:3001/api${url}`;//`http://localhost:3001/api${url}`;//`https://tix.innova-red.net/api${url}`;
+  const fullUrl = `http://localhost:3001/api${url}`;//`http://localhost:3001/api${url}`;//`https://tix.innova-red.net/api${url}`;
   return (token) => {
     const headers = {
       Accept: 'application/json',

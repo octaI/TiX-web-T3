@@ -8,6 +8,7 @@ import {
 } from 'redux-form-material-ui';
 import RaisedButton from 'material-ui/RaisedButton';
 
+
 const Captcha = props => (
   <ReCAPTCHA
     sitekey='6LexqSAUAAAAAKD-PBs2MePg0TCpRuyFi4-HJ66R'
@@ -50,6 +51,21 @@ class RegisterForm extends Component {
   }
 }
 
+const asyncValidate = values => {
+    const email_domain = values.username.split("@")[1] //grab the domain name
+    return new Promise((resolve,reject) => {
+        fetch('https://dns-api.org/MX/'+email_domain).then(data => {
+            console.log(data.status);
+            if (data.status !== 200) {
+                reject({username: 'El dominio de email no es valido'});
+            } else {
+                resolve();
+            }
+
+        })
+    })
+};
+
 const validate = values => {
     const errors = {};
     if (!values.username)  {
@@ -70,7 +86,7 @@ const validate = values => {
   return errors;
 };
 
-const renderField = ({ input, label, type, meta: { touched, error } }) => (
+const renderField = ({ input, label, type, meta: { asyncValidating, touched, error } }) => (
     <div>
         <label>{label}</label>
         <div>
@@ -86,7 +102,8 @@ RegisterForm.propTypes = {
 
 const ReduxRegisterForm = reduxForm({
     form: 'register',
-    validate
+    validate,
+    asyncValidate
 })(RegisterForm);
 
 export default ReduxRegisterForm;
