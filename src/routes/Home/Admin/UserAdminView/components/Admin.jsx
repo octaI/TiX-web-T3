@@ -17,6 +17,23 @@ class AdminView extends Component {
 
   componentWillMount() {
     this.props.fetchAllUsers();
+    this.changeRoleButton = this.changeRoleButton.bind(this);
+  }
+
+  changeRoleButton(id, username, role) {
+    if (username !== 'admin') {
+      const buttonText = (role === 'admin' ? '+ Rol' : '- Rol');
+      return (
+        <span
+          onTouchTap={() => changeRole(id, role === 'admin' ? 'user' : 'admin')}
+          className='btn btn-info'
+          style={{ marginLeft: '5px' }}
+        >
+          {buttonText}
+        </span>
+      );
+    }
+    return <span></span>;
   }
 
   renderUsers(users, impersonateUserFunc, changeRole) {
@@ -30,13 +47,7 @@ class AdminView extends Component {
             <span onTouchTap={() => impersonateUserFunc(user.id)} className='btn btn-info'>
               Impersonar
             </span>
-            <span
-              onTouchTap={() => changeRole(user.id, user.role === 'admin' ? 'user' : 'admin')}
-              className='btn btn-info'
-              style={{ marginLeft: '5px' }}
-            >
-              {user.role === 'admin' ? '- Rol' : '+ Rol'}
-            </span>
+            {this.changeRoleButton(user.id, user.username, user.role)}
           </div>
         </TableRowColumn>
       </TableRow>

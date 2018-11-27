@@ -2,11 +2,10 @@ Things to fix
 =============
 
 * ¿Tiene sentido que "Reporte de usuario" esté en la sección "Configuración"?
-* Gráficos: que las fechas aclaren el año
 * Mensajes de error si los filtros son inválidos (e.g., fecha inicio >= fecha final)
 * Aclarar que el instalador es para Debian-based
-* Abstraer host:port address
 * Falta devolución de error en varios lados
+* Abstraer host:port address
 
 
 Solved
@@ -29,6 +28,7 @@ Que van a quedar como "To do"
 * Poder modificar la escala de los gráficos
 * Si se carga la página de una instalación distinta a la idx 0, igual aparece la 0 desplegada : (mc) Intenté arreglarlo pero fracasé
 * Los gráficos muestran el rango que tiene datos, en vez de todo el rango elegido
+* Gráficos: las fechas en el eje no especifican el año (pero todavía se puede pasar el mouse y lo dice)
 
 
 ### Cosas para hablar con tix-backend:

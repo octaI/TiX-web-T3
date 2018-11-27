@@ -37,7 +37,7 @@ class LandingView extends Component {
                   Internet.`
                   }
                 </p>
-                <a className='btn btn-info btn-large' href='/register'>Instalar TiX</a>
+                <a className='btn btn-info btn-large' style={{ marginLeft: '30px' }} href='/register'>Registrarse</a>
 
               </div>
             </div>
@@ -86,7 +86,7 @@ class LandingView extends Component {
               su PC y/o computadora portátil aquí: `
               }
             </p>
-            <a className='btn btn-info' href='/register'>Instalar TiX</a>
+            <a className='btn btn-info' style={{ marginLeft: '80px' }} href='/register'>Instalar TiX</a>
           </div>
         </div>
         <hr />
