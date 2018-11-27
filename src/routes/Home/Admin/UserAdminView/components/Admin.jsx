@@ -17,11 +17,24 @@ class AdminView extends Component {
 
   componentWillMount() {
     this.props.fetchAllUsers();
+    this.impersonateButton = this.impersonateButton.bind(this);
     this.changeRoleButton = this.changeRoleButton.bind(this);
   }
 
-  changeRoleButton(id, username, role) {
-    if (username !== 'admin') {
+  impersonateButton(currentUser, id, username) {
+    if (username !== 'admin' && (!currentUser || currentUser['username'] !== username)) {
+      return (
+        <span onTouchTap={() => this.props.impersonateUserFunc(id)} className='btn btn-info'>
+          Impersonar
+        </span>
+      );
+    } else {
+      return <span></span>;
+    }
+  }
+
+  changeRoleButton(currentUser, id, username, role) {
+    if (currentUser && currentUser["username"] === 'admin' && username !== 'admin') {
       const buttonText = (role === 'admin' ? '+ Rol' : '- Rol');
       return (
         <span
@@ -37,6 +50,7 @@ class AdminView extends Component {
   }
 
   renderUsers(users, impersonateUserFunc, changeRole) {
+    const currentUser = JSON.parse(localStorage.getItem('user'));
     return users.map(user => (
       <TableRow key={user.id}>
         <TableRowColumn>{user.id}</TableRowColumn>
@@ -44,10 +58,8 @@ class AdminView extends Component {
         <TableRowColumn>{user.role}</TableRowColumn>
         <TableRowColumn>
           <div>
-            <span onTouchTap={() => impersonateUserFunc(user.id)} className='btn btn-info'>
-              Impersonar
-            </span>
-            {this.changeRoleButton(user.id, user.username, user.role)}
+            {this.impersonateButton(currentUser, user.id, user.username)}
+            {this.changeRoleButton(currentUser, user.id, user.username, user.role)}
           </div>
         </TableRowColumn>
       </TableRow>
