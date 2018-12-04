@@ -3,7 +3,13 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import R from 'ramda';
+import Chip from 'material-ui/Chip'
+import Avatar from 'material-ui/Avatar'
+import SnackBar from 'material-ui/Snackbar'
+import Badge from 'material-ui/Badge'
+import Card from 'material-ui/Card'
 import AppBar from 'material-ui/AppBar';
+import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
@@ -19,6 +25,7 @@ const renderLeftIcon = (user, logout, stopImpersonalization) => {
   if (!user) {
     return <FlatButton href='/about' label='Sobre el proyecto' />;
   }
+
   const menuItems = [(
     <MenuItem
       key='closeSession'
@@ -27,24 +34,45 @@ const renderLeftIcon = (user, logout, stopImpersonalization) => {
     />
   )];
   if (user.isImpersonating) {
-    menuItems.push(
-      <MenuItem
-        key='stopImpersonation'
-        onTouchTap={stopImpersonalization}
-        primaryText='Terminar impersonalización'
-      />
-    );
+
+      return (
+          <div>
+              <FlatButton
+                  label={'Impersonando a: ' + user.username}
+                  style={{marginRight: 'auto'}}
+                  labelStyle={{color: '#ffffff'}}
+              >
+              </FlatButton>
+
+              <RaisedButton onTouchTap={stopImpersonalization}
+                            backgroundColor={'#559ac6'}
+                            style={{ marginRight: '50px'}}
+                            label='Terminar Impersonalizacion'
+              ></RaisedButton>
+              <IconMenu
+                  iconButtonElement={
+                      <IconButton><MoreVertIcon /></IconButton>
+                  }
+              >
+                  {menuItems}
+              </IconMenu>
+          </div>)
   }
   return (
-    <IconMenu
-      iconButtonElement={
-        <IconButton><MoreVertIcon /></IconButton>
-      }
-    >
-      {menuItems}
-    </IconMenu>
+      <div>
+          <IconMenu
+              iconButtonElement={
+                  <IconButton><MoreVertIcon /></IconButton>
+              }
+          >
+              {menuItems}
+          </IconMenu>
+      </div>
+
+
   );
 };
+
 
 
 export const Header = props => (
@@ -57,7 +85,6 @@ export const Header = props => (
       onTitleTouchTap={props.redirectToHome}
     />
     <div className='beta-banner'>{ 'Versión Beta' }</div>
-
     <Alert alerts={props.alerts} clearAlert={props.clearAlert} />
   </header>
 );
