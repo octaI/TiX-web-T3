@@ -38,7 +38,7 @@ class AdminView extends Component {
       const buttonText = (role === 'admin' ? '+ Rol' : '- Rol');
       return (
         <span
-          onTouchTap={() => changeRole(id, role === 'admin' ? 'user' : 'admin')}
+          onTouchTap={() => {if(window.confirm('Está seguro que desea realizar esta acción?')){changeRole(id, role === 'admin' ? 'user' : 'admin')} }}
           className='btn btn-info'
           style={{ marginLeft: '5px' }}
         >
