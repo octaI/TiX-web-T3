@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import TextField from 'material-ui/TextField'
 import { connect } from 'react-redux';
 import R from 'ramda';
 import {
@@ -14,7 +15,10 @@ import { Card, CardTitle, CardText } from 'material-ui/Card';
 import { fetchAllUsers, impersonateUser, editRole } from '../../../../../store/domain/account/actions';
 
 class AdminView extends Component {
-
+    constructor(props){
+        super(props);
+        this.state = {searchValue: ''}
+    }
   componentWillMount() {
     this.props.fetchAllUsers();
     this.impersonateButton = this.impersonateButton.bind(this);
@@ -49,8 +53,25 @@ class AdminView extends Component {
     return <span></span>;
   }
 
-  renderUsers(users, impersonateUserFunc, changeRole) {
+  renderUsers(users, impersonateUserFunc, changeRole,searchValue='') {
     const currentUser = JSON.parse(localStorage.getItem('user'));
+    if (searchValue !== '') {
+        return users.filter((user) => {
+            return user.username .includes(searchValue);
+        }).map(user => (
+            <TableRow key={user.id}>
+                <TableRowColumn>{user.id}</TableRowColumn>
+                <TableRowColumn>{user.username}</TableRowColumn>
+                <TableRowColumn>{user.role}</TableRowColumn>
+                <TableRowColumn>
+                    <div>
+                        {this.impersonateButton(currentUser, user.id, user.username)}
+                        {this.changeRoleButton(currentUser, user.id, user.username, user.role)}
+                    </div>
+                </TableRowColumn>
+            </TableRow>
+        ));
+    }
     return users.map(user => (
       <TableRow key={user.id}>
         <TableRowColumn>{user.id}</TableRowColumn>
@@ -66,13 +87,16 @@ class AdminView extends Component {
     ));
   }
 
+  handleTextFieldOnChange(users,impersonateUserFunc,changeRole,event) {
+     this.setState({searchValue: event.target.value});
+  }
+
   render() {
     const {
       users,
       impersonateUserFunc,
       changeRole,
     } = this.props;
-
     return (
       <Card className='card-margins'>
         <CardTitle
@@ -80,6 +104,12 @@ class AdminView extends Component {
           subtitle='Visualizar e impersonalizar los usuarios del sistema'
         />
         <CardText>
+            <TextField
+                floatingLabelText={'Buscar usuario por nombre'}
+                onChange={(e) => this.handleTextFieldOnChange(users,impersonateUserFunc,changeRole,e)}
+            >
+
+            </TextField>
           <Table>
             <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
               <TableRow>
@@ -90,7 +120,7 @@ class AdminView extends Component {
               </TableRow>
             </TableHeader>
             <TableBody displayRowCheckbox={false} showRowHover>
-              {this.renderUsers(users, impersonateUserFunc, changeRole)}
+              {this.renderUsers(users, impersonateUserFunc, changeRole,this.state.searchValue)}
             </TableBody>
           </Table>
         </CardText>
