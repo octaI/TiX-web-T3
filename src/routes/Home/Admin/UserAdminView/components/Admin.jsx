@@ -52,38 +52,30 @@ class AdminView extends Component {
     }
     return <span></span>;
   }
-
+  renderSingleUser(user,impersonateUserFunc,changeRole,currentUser){
+        return <TableRow key={user.id}>
+            <TableRowColumn>{user.id}</TableRowColumn>
+            <TableRowColumn>{user.username}</TableRowColumn>
+            <TableRowColumn>{user.role}</TableRowColumn>
+            <TableRowColumn>
+                <div>
+                    {this.impersonateButton(currentUser, user.id, user.username)}
+                    {this.changeRoleButton(currentUser, user.id, user.username, user.role)}
+                </div>
+            </TableRowColumn>
+        </TableRow>
+  }
   renderUsers(users, impersonateUserFunc, changeRole,searchValue='') {
     const currentUser = JSON.parse(localStorage.getItem('user'));
     if (searchValue !== '') {
         return users.filter((user) => {
             return user.username .includes(searchValue);
         }).map(user => (
-            <TableRow key={user.id}>
-                <TableRowColumn>{user.id}</TableRowColumn>
-                <TableRowColumn>{user.username}</TableRowColumn>
-                <TableRowColumn>{user.role}</TableRowColumn>
-                <TableRowColumn>
-                    <div>
-                        {this.impersonateButton(currentUser, user.id, user.username)}
-                        {this.changeRoleButton(currentUser, user.id, user.username, user.role)}
-                    </div>
-                </TableRowColumn>
-            </TableRow>
+            this.renderSingleUser(user,impersonateUserFunc,changeRole,currentUser)
         ));
     }
     return users.map(user => (
-      <TableRow key={user.id}>
-        <TableRowColumn>{user.id}</TableRowColumn>
-        <TableRowColumn>{user.username}</TableRowColumn>
-        <TableRowColumn>{user.role}</TableRowColumn>
-        <TableRowColumn>
-          <div>
-            {this.impersonateButton(currentUser, user.id, user.username)}
-            {this.changeRoleButton(currentUser, user.id, user.username, user.role)}
-          </div>
-        </TableRowColumn>
-      </TableRow>
+        this.renderSingleUser(user,impersonateUserFunc,changeRole,currentUser)
     ));
   }
 
