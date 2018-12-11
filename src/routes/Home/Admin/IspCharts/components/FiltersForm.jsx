@@ -97,6 +97,27 @@ class FiltersForm extends Component {
   }
 }
 
+const validate = values => {
+  const errors = {};
+  if (values.startDate && values.endDate && values.startDate > values.endDate) {
+    errors.endDate = 'No puede ser anterior a la fecha inicial';
+  }
+  if (values.startTime && values.endTime && values.startTime > values.endTime) {
+    errors.endTime = 'No puede ser anterior a la hora de inicio';
+  }
+  return errors;
+};
+
+const renderField = ({ input, label, type, meta: { touched, error } }) => (
+  <div>
+    <label>{label}</label>
+    <div>
+      <input {...input} placeholder={label} type={type}/>
+      {touched && error && <span>{error}</span>}
+    </div>
+  </div>
+);
+
 FiltersForm.propTypes = {
   handleSubmit: PropTypes.func,
   handleChange: PropTypes.func,
@@ -121,8 +142,9 @@ const FiltersFormView = reduxForm(
       startDate: new Date(moment().subtract(1, 'day').subtract(1, 'month')),
       endDate:   new Date(moment().subtract(1, 'day')),
     },
+    validate,
   },
-  mapStateToProps
+  mapStateToProps,
 )(FiltersForm);
 
 /// Forma ideal (algo tiene mal):

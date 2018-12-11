@@ -57,7 +57,7 @@ const asyncValidate = values => {
         fetch('https://dns-api.org/MX/'+email_domain).then(data => {
             console.log(data.status);
             if (data.status !== 200) {
-                reject({username: 'El dominio de email no es valido'});
+                reject({username: 'El dominio de email no es válido'});
             } else {
                 resolve();
             }
@@ -71,12 +71,12 @@ const validate = values => {
     if (!values.username)  {
         errors.username = 'Requerido'
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.username)) {
-        errors.username = 'Direccion de email Invalida';
+        errors.username = 'Dirección de email inválida';
     }
     if (!values.password1) {
       errors.password1 = 'Requerido'
     } else  if (values.password1 !== values.password2){
-        errors.password2 = 'Los passwords no coinciden'
+        errors.password2 = 'Las contraseñas no coinciden'
     }
     if (!values.password2) {
       errors.password2 = 'Requerido'

@@ -116,6 +116,7 @@ class AdminView extends Component {
             <TextField
                 floatingLabelText={'Buscar usuario por nombre'}
                 onChange={(e) => this.handleTextFieldOnChange(users,impersonateUserFunc,changeRole,e)}
+                style={{ marginLeft: '15px' }}
             >
 
             </TextField>

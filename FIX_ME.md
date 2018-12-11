@@ -1,13 +1,11 @@
 Things to fix
 =============
 
-* Mensajes de error si los filtros son inválidos (e.g., fecha inicio >= fecha final)
-* Aclarar que el instalador es para Debian-based
-
-
 Solved
 ------
 
+* Mensajes de error si los filtros son inválidos (e.g., fecha inicio >= fecha final) : (mc)
+* Aclarar que el instalador es para Debian-based : (mc)
 * Lista de Panel de Admin en sidebar no queda desplegada : (mc) ahora siempre abierta
 * Page title dice "Tix App" en vez de "TiX App" : (mc)
 * Installation graphs: Al cambiar el rango (incluso con el botón) se olvida de la opción up/down-stream : (mc)

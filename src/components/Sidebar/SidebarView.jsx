@@ -32,22 +32,25 @@ class SidebarView extends Component {
   renderAdminLink(user) {
     if (user.role === 'admin') {
       return (
-        <ListItem
-          key='admin'
-          primaryText={'Panel de Administración'}
-          containerElement={<Link to='/home/admin/users' />}
-          value='/home/admin/users'
-          open={true}
-          nestedItems={[
-            <ListItem
-              key='admin0'
-              primaryText={'Gráficos de Utilización'}
-              containerElement={<Link to='/home/admin/ispchart' />}
-              value='/home/admin/ispchart'
-            />,
-          ]}
-      />
-  );
+        <div>
+          <Subheader>Administración</Subheader>
+          <ListItem
+            key='admin'
+            primaryText={'Panel de administración'}
+            containerElement={<Link to='/home/admin/users' />}
+            value='/home/admin/users'
+            open={true}
+            nestedItems={[
+              <ListItem
+                key='admin0'
+                primaryText={'Gráficos de utilización'}
+                containerElement={<Link to='/home/admin/ispchart' />}
+                  value='/home/admin/ispchart'
+              />,
+            ]}
+          />
+        </div>
+      );
     }
     return <div />;
   }
@@ -72,7 +75,7 @@ class SidebarView extends Component {
         <Subheader>Configuración</Subheader>
         <ListItem
           key='config0'
-          primaryText={'Ver Instalaciones'}
+          primaryText={'Ver instalaciones'}
           leftIcon={<Pencil />}
           containerElement={<Link to='/home/installation/view' />}
           value='/home/installation/view'
