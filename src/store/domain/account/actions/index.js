@@ -85,7 +85,7 @@ export function stopImpersonation() {
     dispatch({
       type: STOP_IMPERSONATION,
     });
-    return dispatch(fetchCurrentUser()).then(() => dispatch(push('/home')));
+    return dispatch(fetchCurrentUser()).then(() => dispatch(push('/home/admin/users')));
   };
 }
 

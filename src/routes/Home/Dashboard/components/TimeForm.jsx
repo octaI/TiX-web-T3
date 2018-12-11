@@ -34,7 +34,8 @@ class SelectDate extends Component {
           <Field name='endDate'   component={DatePicker} floatingLabelText='Fecha final' />
           <button className='btn btn-primary btn-large' type='submit'>Ver últimos datos</button>
         </form>
-      </Paper>);
+      </Paper>
+    );
   }
 }
 
