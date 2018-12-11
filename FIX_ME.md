@@ -1,11 +1,8 @@
 Things to fix
 =============
 
-* ¿Tiene sentido que "Reporte de usuario" esté en la sección "Configuración"?
 * Mensajes de error si los filtros son inválidos (e.g., fecha inicio >= fecha final)
 * Aclarar que el instalador es para Debian-based
-* Falta devolución de error en varios lados
-* Abstraer host:port address
 
 
 Solved
@@ -23,6 +20,9 @@ Solved
 Que van a quedar como "To do"
 -----------------------------
 
+* Falta devolución de error en varios lados
+* Abstraer host:port address
+* ¿Tiene sentido que "Reporte de usuario" esté en la sección "Configuración"?
 * Al registrarse correctamente, redirigir al login
 * RecoverView redefine clase HomeView (cambiarle al nombre correcto)
 * Poder modificar la escala de los gráficos

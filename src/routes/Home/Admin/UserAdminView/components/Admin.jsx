@@ -42,7 +42,11 @@ class AdminView extends Component {
       const buttonText = (role === 'admin' ? '+ Rol' : '- Rol');
       return (
         <span
-          onTouchTap={() => {if(window.confirm('Está seguro que desea realizar esta acción?')){changeRole(id, role === 'admin' ? 'user' : 'admin')} }}
+          onTouchTap={() => {
+            if (window.confirm('¿Está seguro de que desea realizar esta acción?')) {
+              changeRole(id, role === 'admin' ? 'user' : 'admin')
+            }
+          }}
           className='btn btn-info'
           style={{ marginLeft: '5px' }}
         >
@@ -54,8 +58,9 @@ class AdminView extends Component {
   }
   renderSingleUser(user,impersonateUserFunc,changeRole,currentUser){
         return <TableRow key={user.id}>
-            <TableRowColumn>{user.id}</TableRowColumn>
-            <TableRowColumn>{user.username}</TableRowColumn>
+            <TableRowColumn width={100}>{user.id}</TableRowColumn>
+            <TableRowColumn width={250}>{user.username}</TableRowColumn>
+            <TableRowColumn>{user.measure_count}</TableRowColumn>
             <TableRowColumn>{user.role}</TableRowColumn>
             <TableRowColumn>
                 <div>
@@ -65,16 +70,28 @@ class AdminView extends Component {
             </TableRowColumn>
         </TableRow>
   }
+  sortUsers(users) {
+    function compare(u1, u2) {
+      if (u1.measure_count > u2.measure_count)
+        return -1;
+      if (u1.measure_count < u2.measure_count)
+        return 1;
+      if (u1.id < u2.id)
+        return -1;
+      return 1;
+    }
+    return users.sort(compare);
+  }
   renderUsers(users, impersonateUserFunc, changeRole,searchValue='') {
     const currentUser = JSON.parse(localStorage.getItem('user'));
     if (searchValue !== '') {
-        return users.filter((user) => {
+        return this.sortUsers(users).filter((user) => {
             return user.username .includes(searchValue);
         }).map(user => (
             this.renderSingleUser(user,impersonateUserFunc,changeRole,currentUser)
         ));
     }
-    return users.map(user => (
+    return this.sortUsers(users).map(user => (
         this.renderSingleUser(user,impersonateUserFunc,changeRole,currentUser)
     ));
   }
@@ -105,8 +122,9 @@ class AdminView extends Component {
           <Table>
             <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
               <TableRow>
-                <TableHeaderColumn>#</TableHeaderColumn>
-                <TableHeaderColumn>Nickname</TableHeaderColumn>
+                <TableHeaderColumn width={100}>#</TableHeaderColumn>
+                <TableHeaderColumn width={250}>Nickname</TableHeaderColumn>
+                <TableHeaderColumn># mediciones</TableHeaderColumn>
                 <TableHeaderColumn>Rol</TableHeaderColumn>
                 <TableHeaderColumn>Acciones</TableHeaderColumn>
               </TableRow>
