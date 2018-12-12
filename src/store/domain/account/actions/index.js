@@ -80,12 +80,12 @@ export function impersonateUser(id) {
   }).then(() => dispatch(push('/home')));
 }
 
-export function stopImpersonation() {
+export function stopImpersonation(userId) {
   return (dispatch) => {
     dispatch({
       type: STOP_IMPERSONATION,
     });
-    return dispatch(fetchCurrentUser()).then(() => dispatch(push('/home/admin/users')));
+    return dispatch(fetchCurrentUser()).then(() => dispatch(push(`/home/admin/users#id${userId}`)));
   };
 }
 

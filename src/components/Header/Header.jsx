@@ -26,6 +26,10 @@ const renderLeftIcon = (user, logout, stopImpersonalization) => {
     return <FlatButton href='/about' label='Sobre el proyecto' />;
   }
 
+  function stopUserImpersonation() {
+    stopImpersonalization(user.id);
+  }
+
   const menuItems = [(
     <MenuItem
       key='closeSession'
@@ -44,10 +48,10 @@ const renderLeftIcon = (user, logout, stopImpersonalization) => {
               >
               </FlatButton>
 
-              <RaisedButton onTouchTap={stopImpersonalization}
+              <RaisedButton onTouchTap={stopUserImpersonation}
                             backgroundColor={'#559ac6'}
                             style={{ marginRight: '50px'}}
-                            label='Terminar Impersonalizacion'
+                            label='Terminar Impersonalización'
               ></RaisedButton>
               <IconMenu
                   iconButtonElement={
@@ -111,7 +115,7 @@ const mapStateToProps = store => ({
 
 const mapDispatchToProps = dispatch => ({
   logoutUser: () => dispatch(logoutUser()),
-  stopImpersonationFunc: () => dispatch(stopImpersonation()),
+  stopImpersonationFunc: (userId) => dispatch(stopImpersonation(userId)),
   clearAlert: id => dispatch(removeAlert(id)),
   redirectToHome: () => dispatch(push('/')),
 });

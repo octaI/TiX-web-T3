@@ -12,6 +12,7 @@ import {
   TableRowColumn,
 } from 'material-ui/Table';
 import { Card, CardTitle, CardText } from 'material-ui/Card';
+import ScrollableAnchor from 'react-scrollable-anchor';
 import { fetchAllUsers, impersonateUser, editRole } from '../../../../../store/domain/account/actions';
 
 class AdminView extends Component {
@@ -56,19 +57,23 @@ class AdminView extends Component {
     }
     return <span></span>;
   }
-  renderSingleUser(user,impersonateUserFunc,changeRole,currentUser){
-        return <TableRow key={user.id}>
-            <TableRowColumn width={100}>{user.id}</TableRowColumn>
-            <TableRowColumn width={250}>{user.username}</TableRowColumn>
-            <TableRowColumn>{user.measure_count}</TableRowColumn>
-            <TableRowColumn>{user.role}</TableRowColumn>
-            <TableRowColumn>
-                <div>
-                    {this.impersonateButton(currentUser, user.id, user.username)}
-                    {this.changeRoleButton(currentUser, user.id, user.username, user.role)}
-                </div>
-            </TableRowColumn>
-        </TableRow>
+  renderSingleUser(user,impersonateUserFunc,changeRole,currentUser) {
+    return (
+      <TableRow key={user.id}>
+        <ScrollableAnchor id={'id' + user.id}>
+          <TableRowColumn width={50}>{user.id}</TableRowColumn>
+        </ScrollableAnchor>
+        <TableRowColumn>{user.username}</TableRowColumn>
+        <TableRowColumn width={100}>{user.measure_count ? user.measure_count : '-'}</TableRowColumn>
+        <TableRowColumn>{user.role}</TableRowColumn>
+        <TableRowColumn>
+            <div>
+                {this.impersonateButton(currentUser, user.id, user.username)}
+                {this.changeRoleButton(currentUser, user.id, user.username, user.role)}
+            </div>
+        </TableRowColumn>
+      </TableRow>
+    );
   }
   sortUsers(users) {
     function compare(u1, u2) {
@@ -113,19 +118,18 @@ class AdminView extends Component {
           subtitle='Visualizar e impersonalizar los usuarios del sistema'
         />
         <CardText>
-            <TextField
-                floatingLabelText={'Buscar usuario por nombre'}
-                onChange={(e) => this.handleTextFieldOnChange(users,impersonateUserFunc,changeRole,e)}
-                style={{ marginLeft: '15px' }}
-            >
+          <TextField
+            floatingLabelText={'Buscar usuario por nombre'}
+            onChange={(e) => this.handleTextFieldOnChange(users,impersonateUserFunc,changeRole,e)}
+            style={{ marginLeft: '15px' }}>
+          </TextField>
 
-            </TextField>
           <Table>
             <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
               <TableRow>
-                <TableHeaderColumn width={100}>#</TableHeaderColumn>
-                <TableHeaderColumn width={250}>Nickname</TableHeaderColumn>
-                <TableHeaderColumn># mediciones</TableHeaderColumn>
+                <TableHeaderColumn width={50}>#</TableHeaderColumn>
+                <TableHeaderColumn>Nickname</TableHeaderColumn>
+                <TableHeaderColumn width={100}># mediciones</TableHeaderColumn>
                 <TableHeaderColumn>Rol</TableHeaderColumn>
                 <TableHeaderColumn>Acciones</TableHeaderColumn>
               </TableRow>
